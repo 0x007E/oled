@@ -1,0 +1,109 @@
+title: "OLED Display Library"
+# If brand is not set the github user avatar will be used.
+# Priority:
+# - image
+# - gravatar
+# - github user avatar
+brand:
+  # image: "https://image.url/here.png"
+  # Mail SHA256 encrypted with https://emn178.github.io/online-tools/sm3.html
+  gravatar: "f4ef9cbf3c2c5a2a1afa89a33134b335b5237132f06729990cacbfc5646b0b6a"
+  # width: 20   # default: 30
+  # height: 20  # default: 30
+github:
+  user: "0x007e"
+  # email: "person@mail.address"
+copyright: "Distributed by 0x007E"
+license: "https://github.com/0x007E/oled/blob/main/LICENSE.md"
+
+description: >
+  Documenation about using the OLED (SSD1306) display with the library of the
+  oled repository. Description of the tty- and frame-mode and usage within
+  different environment setups.
+
+url: "https://0x007e.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/oled" # the subpath of your site, e.g. /blog
+remote_theme: 0x007e/tilde
+
+social:
+  - title: Find me on GitHub
+    icon: github
+    link: "https://github.com/0x007e"
+    # values: primary, secondary, success, danger, warning, info, light, dark, body-emphasis
+    color: secondary
+  - title: Find me on GitLab
+    icon: gitlab
+    link: "https://gitlab.com/0x007e"
+  - title: 0x007e at X (formerly Twitter)
+    icon: x
+    link: "https://x.com/sunriax"
+    color: secondary
+  - title: 0x007e at LinkedIn
+    icon: linkedin
+    link: "https://www.linkedin.com/in/ragae"
+    color: primary
+  - title: 0x007e at StackOverflow
+    icon: stackoverflow
+    link: "https://stackoverflow.com/users/13855290/sunriax"
+  - title: 0x007e on YouTube
+    icon: youtube
+    link: "https://www.youtube.com/@mr.bitshift"
+    color: danger
+
+tilde:
+  # Restict links in navbar to listed pages
+  # -> e.g. if you have a README.md/LICENSE.md in your root folder and they should not be displayed.
+  nav_pages:
+    - impressum.md
+    - privacy.md
+  # Set in which formate dates are displayed
+  # Possible formats: https://shopify.github.io/liquid/filters/date/
+  # date_format: "%b %-d, %Y"
+  show_introduction: true
+  visible_posts: 20
+  category_show_goto: false
+  truncate_next_blog_link: 35
+
+# footer:
+# Column allocation in the footer. A total of 10 is always required.
+#   github_column: 4
+#   description_column: 6
+
+feed:
+  hide: false
+  color: "success"
+
+#google_analytics: "G-XXXXXXXXXXX" # Google Analytics tracking ID
+# cookies:
+#   title: Cookies & Privacy
+#   text: >
+#     This website uses cookies for analysis and personalization (Google Analytics).
+#     Should cookies be allowed?
+#   button_accept: Accept
+#   button_decline: Decline
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jemoji
+  - jekyll-avatar
+  - jekyll-remote-theme
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  highlighter: rouge
+  syntax_highlighter_opts:
+    line_numbers: false 
+
+sass:
+  style: compressed
+
+defaults:
+  -
+    scope:
+      path:            "assets/*"
+    values:
+      sitemap:         false
