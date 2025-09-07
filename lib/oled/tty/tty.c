@@ -171,7 +171,6 @@ char tty_putchar(char character)
         }
 
         oled_page_segment(temp, (tty_dynamic_text_rstrip + tty_character * FONT_WIDTH), (tty_dynamic_text_rstrip + (tty_character + 1) * FONT_WIDTH), tty_line);
-        //}
 
         if(*(temp + FONT_WIDTH - 1) != 0x00)
         {
