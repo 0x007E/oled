@@ -50,7 +50,7 @@
          * @details
          * This macro defines the prescaler value for the `TWI` hardware clock. It sets the division factor applied to the TWI clock frequency (`F_TWI`) by configuring the prescaler bits (TWPS) in the TWSR register.
          * 
-         * @note Valid prescaler values are `0`, `1, `2`, and `3`, representing division factors of `1`, `4`, `16`, and `64` respectively.
+         * @note Valid prescaler values are `0`, `1`, `2`, and `3`, representing division factors of `1`, `4`, `16`, and `64` respectively.
          * 
          * @attention Adjusting this value changes the effective `SCL` clock speed on the `TWI` bus by scaling down the base clock frequency.
          */
