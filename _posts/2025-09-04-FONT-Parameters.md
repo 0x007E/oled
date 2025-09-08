@@ -11,7 +11,7 @@ The font header `font.h` defines parameters to setup the size of a character/num
 
 ## Width/Height of the FONT
 
-The `FONT_WIDTH` and `FONT_HEIGHT` macro defines the width and the height oft the font. The installed font has a size of (`w=5*h=7`). The font itself should not exceed `8` in height to prevent using more than one page!
+The `FONT_WIDTH` and `FONT_HEIGHT` macro defines the width and the height of the font. The installed font has a size of (`w=5*h=7`). The font itself should not exceed `8` in height to prevent using more than one page!
 
 ```c
 #define FONT_WIDTH 5
@@ -28,7 +28,7 @@ Within the [OLED Graphics Designer (`OLGD`)](https://0x007e.github.io/oled-desig
 
 ## Ignore lowercase letters
 
-To save memory or if lower case letters are not used they can be disabled with the ´FONT_IGNORE_LOWER_CASE` macro (not enabled by default). Every lower case letter is automatically converted to a upper case letter.
+To save memory or if lower case letters are not needed they can be disabled with the ´FONT_IGNORE_LOWER_CASE` macro (not enabled by default). Every lower case letter is automatically converted to an upper case letter.
 
 > To do this, simply remove the comment before the macro.
 
