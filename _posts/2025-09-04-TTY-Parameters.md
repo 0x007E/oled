@@ -50,4 +50,4 @@ Sometimes it's necessary to save some space. Therefore, it's possible to disable
 
 ---
 
-For a more detailed view of the possible parameters that can be set in `oled.h`, take a look at the [OLED Doxygen documentation (`OLDD`)](https://0x007e.github.io/oled/doxygen/tty_8h.html).
+For a more detailed view of the possible parameters that can be set in `tty.h`, take a look at the [OLED Doxygen documentation (`OLDD`)](https://0x007e.github.io/oled/doxygen/tty_8h.html).
