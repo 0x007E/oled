@@ -248,7 +248,7 @@ void frame_draw_text(const char *text, DRAWING_Position position)
 /**
  * @brief Renders a formatted number on the OLED display at a specified position.
  *
- * This function receives a pointer to a number as any supported type (unsigned, signed, float, or double), converts it to a string representation according to the specified number type and radix (base), and draws the result as text at the given display position. The output can be padded with leading spaces (decimal) or zeros (other bases) to fit the desired field length. Supports decimal, hexadecimal, and other numeric bases, as well as fixed precision for floating-point numbers if `FRAME_NUMBER_ENABLE_DECIMAL` is defined. Internally utilizes font rendering to display the formatted string.
+ * This function receives a pointer to a number as any supported type (unsigned, signed, float, or double), converts it to a string representation according to the specified number type and radix (base), and draws the result as text at the given display position. The output can be padded with leading spaces (decimal) or zeros (other bases) to fit the desired field length. Supports decimal, hexadecimal, and other numeric bases, as well as fixed precision for floating-point numbers if `FRAME_NUMBER_ENABLE_FLOATING_POINT` is defined. Internally utilizes font rendering to display the formatted string.
  *
  * @param number Pointer to the value to display (type selected via the @p type argument).
  * @param length Minimum output width in characters (for padding).
@@ -284,7 +284,7 @@ void frame_draw_number(const void* number, unsigned char length, NUMBER_Type typ
             signed_value = *((long*)number);
             operation = FRAME_Number_Operation_Signed;
             break;
-	#ifdef FRAME_NUMBER_ENABLE_DECIMAL
+	#ifdef FRAME_NUMBER_ENABLE_FLOATING_POINT
         case NUMBER_Float:
         case NUMBER_Double:
             operation = FRAME_Number_Operation_Decimal;
@@ -298,7 +298,7 @@ void frame_draw_number(const void* number, unsigned char length, NUMBER_Type typ
 	{
 		result = itoa(signed_value, number_buffer, (unsigned int)radix);
 	}
-#ifdef FRAME_NUMBER_ENABLE_DECIMAL
+#ifdef FRAME_NUMBER_ENABLE_FLOATING_POINT
     else if(operation == FRAME_Number_Operation_Decimal)
     {
 	    float fvalue = *((float*)number);

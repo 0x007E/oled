@@ -71,20 +71,20 @@
 		#define FRAME_SPECIFIC_BACKGROUND
 	#endif
 
-	#ifndef FRAME_NUMBER_ENABLE_DECIMAL
+	#ifndef FRAME_NUMBER_ENABLE_FLOATING_POINT
 		/**
-		 * @def FRAME_NUMBER_ENABLE_DECIMAL
-		 * @brief Enables support for decimal (floating-point) numbers in frame rendering.
+		 * @def FRAME_NUMBER_ENABLE_FLOATING_POINT
+		 * @brief Enables support for floating-point numbers in frame rendering.
 		 * 
 		 * @details
-		 * Defining this macro enables the display and formatting of decimal numbers (numbers with fractional parts) within the frame output functions.
+		 * Defining this macro enables the display and formatting of numbers with fractional parts within the frame output functions.
 		 * 
-		 * @note Enabling decimal number support increases program memory usage due to added formatting and processing code. This tradeoff should be considered when working with memory-constrained embedded systems. If memory usage is critical and decimal precision is not required, refrain from defining this macro.
+		 * @note Enabling floating-point number support increases program memory usage due to added formatting and processing code. This tradeoff should be considered when working with memory-constrained embedded systems. If memory usage is critical and decimal precision is not required, refrain from defining this macro.
 		 */
-		//#define FRAME_NUMBER_ENABLE_DECIMAL
+		//#define FRAME_NUMBER_ENABLE_FLOATING_POINT
 
         #ifdef _DOXYGEN_    // Used for documentation, can be ignored
-            #define FRAME_NUMBER_ENABLE_DECIMAL
+            #define FRAME_NUMBER_ENABLE_FLOATING_POINT
         #endif
 
 		#ifndef FRAME_NUMBER_PRECISION
