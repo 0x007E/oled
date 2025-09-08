@@ -11,7 +11,7 @@ The FRAME `frame.h` library renders pixel per page. It is possible to draw text/
 
 ![FRAME Text 2 Pages]({{ '/assets/images/display-frame-text-2pages.png' | relative_url }})
 
-The filled areas in the image above and below the text can no longer be written on.
+The filled areas in the image above and below the text can no longer be written on. Otherwise the text itself gets destroyed.
 
 ## Width/Height of the TTY
 
@@ -26,9 +26,9 @@ The `FRAME_WIDTH` and `FRAME_HEIGHT` is normally set to the full width and heigh
 
 ## Specific background of the FRAME
 
-It is possible to set up a standard background with the `FRAME_SPECIFIC_BACKGROUND` macro that is renderd into every function call in the `frame.h`. So a persisent background gets overlayed over every text/number or bar write to the display (is set by default).
+It is possible to set up a standard background with the `FRAME_SPECIFIC_BACKGROUND` macro that is renderd into every function call in the `frame.h`. So a persisent background gets overlayed over every text/number or bar that is written to the display (is set by default).
 
-> This uses `1 KiB` of program space!
+> The background uses `1 KiB` of program space!
 
 ![FRAME background]({{ '/assets/images/display-frame-background.png' | relative_url }})
 
@@ -56,7 +56,7 @@ If floating-point numbers are enabled (`FRAME_NUMBER_ENABLE_FLOATING_POINT`) it 
 #define FRAME_NUMBER_PRECISION
 ```
 
-> Increasing the precision allows for more detailed numbers, but may increase program memory usage and processing time.
+> Increasing the precision allows more detailed numbers, but may increase program memory usage and processing time.
 
 ---
 
