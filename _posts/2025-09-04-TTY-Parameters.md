@@ -5,7 +5,7 @@ categories: [Parameters]
 introduction: "Descriptions of parameters that can be adapted in the tty header"
 ---
 
-The TTY is a console (terminal) that renders lines of text using a font and can output text in different modes.
+The TTY is a console (terminal) that renders lines of text using a font and outputs text in different modes.
 
 ## Width/Height of the TTY
 
@@ -46,7 +46,7 @@ Sometimes it's necessary to save some space. Therefore, it's possible to disable
 #define TTY_ENABLE_PRINTF
 ```
 
-> If `printf` is disabled, text has to be written with `tty_putchar` and `tty_string` function.
+> If `printf` is disabled, text has to be written with `tty_putchar` and `tty_string` functions.
 
 ---
 
