@@ -10,7 +10,7 @@ int main(void)
 {
 	frame_init();
 
-	DRAWING_Position position = { 106, 1 };
+	DRAWING_Position position = { 106, 2 };
 	DRAWING_Size size = { 10, 10 };
 	
 	frame_draw_text("Init", position);
@@ -47,7 +47,7 @@ int main(void)
 		}
 		
 		position.x = 2;
-		position.y = 46;
+		position.y = 47;
 		frame_draw_number_uint(temp, 3, NUMBER_Decimal, position);
 		
 		_delay_ms(50);

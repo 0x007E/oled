@@ -231,11 +231,11 @@ void frame_draw_text(const char *text, DRAWING_Position position)
 				
                 if(page == start_page)
                 {
-					temp |= (font_row<<y_position);
+					temp |= (font_row<<(y_position - OLED_PAGE_SIZE + FONT_HEIGHT));
                 }
                 else
                 {
-					temp |= (font_row>>(OLED_PAGE_SIZE - 1 - y_position));
+					temp |= (font_row>>(OLED_PAGE_SIZE + (OLED_PAGE_SIZE - FONT_HEIGHT) - y_position));
                 }
 				
 				oled_column(temp, frame_row, page);
