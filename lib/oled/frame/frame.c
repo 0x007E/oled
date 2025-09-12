@@ -198,49 +198,67 @@ void frame_init(void)
 /**
  * @brief Renders a text string on the OLED display at a specified position.
  * 
- * This function draws the given null-terminated string starting at the coordinates specified by `position`. It calculates affected display pages based on character height  and handles multi-page rendering for characters that span page boundaries. For each character in the string, the corresponding font bitmap is fetched and individual bytes are combined with the optional background pattern (if enabled) to preserve display background beneath the text. Bit-shifting is applied to properly align the character pixels vertically on partial pages. The function outputs the composed columns of pixel data to the OLED display using the lower-level `oled_column` function.
+ * This function draws the given null-terminated string starting at the coordinates specified by `position`. It calculates affected display pages based on the character height and handles multi-page rendering for characters that span page boundaries. For each character in the string, the corresponding font bitmap is fetched and individual bytes are combined with the optional background pattern (if enabled) to preserve display background beneath the text. Bit-shifting is applied to properly align the character pixels vertically on partial pages. The function outputs the composed columns of pixel data to the OLED display using the lower-level `oled_column` function.
  *
  * @param text Pointer to the null-terminated string to be drawn.
  * @param position The starting position (x, y) on the display for the text.
  */
 void frame_draw_text(const char *text, DRAWING_Position position)
 {
-	unsigned char start_page = (position.y/OLED_PAGE_SIZE);
-	unsigned char end_page = ((position.y + FONT_HEIGHT)/OLED_PAGE_SIZE);
+    unsigned char current_character = 0;
+    
+    while (*(text + current_character) != '\0')
+    {
+        frame_draw_char(*(text + current_character), position);
+        
+        position.x += FONT_WIDTH;
+        current_character++;
+    }
+}
+
+/**
+ * @brief Renders a single character on the OLED display at a specified position.
+ *
+ * This function draws a character bitmap starting at the coordinates specified by `position`. It determines which display pages are affected based on the font height and divides the character rendering across multiple OLED memory pages if necessary. For each column of the character, the corresponding font data is fetched from the font table and optionally combined with a predefined background buffer (if enabled). Bit shifting is applied to align the character correctly on display pages that do not align with the character boundaries. The final pixel data for each column is sent to the OLED driver via the `oled_column` function.
+ *
+ * @param character The ASCII character to be drawn.
+ * @param position The starting position (x, y) on the display for the character.
+ */
+void frame_draw_char(const char character, DRAWING_Position position)
+{
+    unsigned char start_page = (position.y/OLED_PAGE_SIZE);
+    unsigned char end_page = ((position.y + FONT_HEIGHT)/OLED_PAGE_SIZE);
 
     for (unsigned char page=start_page; page <= end_page; page++)
     {
-		unsigned char current_character = 0;
-			
-        while (*(text + current_character) != '\0')
+        unsigned char *font = font_getchararray(character);
+        unsigned char y_position = (position.y%OLED_PAGE_SIZE);
+        
+        for (unsigned char x=0; x < FONT_WIDTH; x++)
         {
-            unsigned char *font = font_getchararray(*(text + current_character));
-			unsigned char y_position = (position.y%OLED_PAGE_SIZE);
-			
-            for (unsigned char x=0; x < FONT_WIDTH; x++)
+            unsigned char font_row = *(font + x);
+            unsigned char frame_row = (position.x + x);
+            
+            unsigned char temp =
+                #ifdef FRAME_SPECIFIC_BACKGROUND
+                    pgm_read_byte(&frame_background[page][frame_row]);
+                #else
+                    0x00;
+                #endif
+            
+            if(y_position == 0)
             {
-				unsigned char font_row = *(font + x);
-				unsigned char frame_row = (position.x + current_character * FONT_WIDTH + x);
-				
-				unsigned char temp = 
-					#ifdef FRAME_SPECIFIC_BACKGROUND
-						pgm_read_byte(&frame_background[page][frame_row]);
-					#else
-						0x00;
-					#endif
-				
-                if(page == start_page)
-                {
-					temp |= (font_row<<(y_position - OLED_PAGE_SIZE + FONT_HEIGHT));
-                }
-                else
-                {
-					temp |= (font_row>>(OLED_PAGE_SIZE + (OLED_PAGE_SIZE - FONT_HEIGHT) - y_position));
-                }
-				
-				oled_column(temp, frame_row, page);
+                temp |= (font_row>>(OLED_PAGE_SIZE - FONT_HEIGHT));
             }
-            current_character++;
+            else if(page == start_page)
+            {
+                temp |= (font_row<<(y_position - OLED_PAGE_SIZE + FONT_HEIGHT));
+            }
+            else
+            {
+                temp |= (font_row>>(OLED_PAGE_SIZE + (OLED_PAGE_SIZE - FONT_HEIGHT) - y_position));
+            }
+            oled_column(temp, frame_row, page);
         }
     }
 }

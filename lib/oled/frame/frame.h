@@ -134,6 +134,7 @@
     typedef enum FRAME_Number_Operation_t FRAME_Number_Operation;
 
     void frame_init(void);
+    void frame_draw_char(const char character, DRAWING_Position position);
 	void frame_draw_text(const char *text, DRAWING_Position position);
 	void frame_draw_number(const void* number, unsigned char length, NUMBER_Type type, NUMBER_Radix radix, DRAWING_Position position);
 	void frame_draw_number_uint(const unsigned int number, unsigned char length, NUMBER_Radix radix, DRAWING_Position position);
