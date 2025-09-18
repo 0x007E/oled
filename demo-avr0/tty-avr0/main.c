@@ -21,7 +21,7 @@ int main(void)
     system_init();
     tty_init();
 
-    PORTA.DIRCLR = 0x0F;
+    PORTA.DIRCLR = 0x1C;
     PORTA.PIN0CTRL = PORT_PULLUPEN_bm;
     PORTA.PIN1CTRL = PORT_PULLUPEN_bm;
     PORTA.PIN2CTRL = PORT_PULLUPEN_bm;
@@ -43,7 +43,7 @@ int main(void)
         printf("%c%c", (temp1++), (temp2--));
         _delay_ms(1000);
 
-        if(!(PORTA.IN & PIN0_bm))
+        if(!(PORTA.IN & PIN2_bm))
         {
             _delay_ms(10);
 
@@ -52,23 +52,23 @@ int main(void)
                 tty_clear_line(i);
             }
 
-            while(!(PORTA.IN & PIN0_bm));
+            while(!(PORTA.IN & PIN2_bm));
         }
-        else if(!(PORTA.IN & PIN1_bm))
+        else if(!(PORTA.IN & PIN3_bm))
         {
             _delay_ms(10);
 
             tty_cursor(0, 2);
 
-            while(!(PORTA.IN & PIN1_bm));
+            while(!(PORTA.IN & PIN3_bm));
         }
-        else if(!(PORTA.IN & PIN2_bm))
+        else if(!(PORTA.IN & PIN4_bm))
         {
             _delay_ms(10);
 
             tty_cursor((TTY_WIDTH>>1), 4);
 
-            while(!(PORTA.IN & PIN2_bm));
+            while(!(PORTA.IN & PIN4_bm));
         }
         _delay_ms(10);
 
