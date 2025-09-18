@@ -2,7 +2,7 @@
 
 # OLED Display Library (SSD1306)
 
-This project includes a easy to use OLED library for an `SSD1306`/`SH1106` that can be used with an `ATmega`- or `ATmega0`-Series controller. The library itself can be found in the [lib](./lib) directory and demo applications are pushed to [demo](./demo) directory. A short description of how to use the library can be found below.
+This project includes a easy to use OLED library for an `SSD1306`/`SH1106` that can be used with an `ATmega`- or `ATmega0`-Series controller. The library itself can be found in the [lib](./lib) directory and demo applications for `avr` are pushed to [demo](./demo) and for `avr0` to [demo-avr0](./demo-avr0) directory. A short description of how to use the library for `avr` platforms can be found below.
 
 ## Advanced guides
 
@@ -14,6 +14,10 @@ This project includes a easy to use OLED library for an `SSD1306`/`SH1106` that 
 
 ## Demo Binaries
 
+> Download all firmware releases as [zip](https://github.com/0x007E/oled/releases/latest/download/firmware.zip) | [tar.gz](https://github.com/0x007E/oled/releases/latest/download/firmware.tar.gz)
+
+### ATmega16A
+
 | Name                                                                                                   | Type  | Controller | CLOCK | SCL | SDA | Description             |
 |:------------------------------------------------------------------------------------------------------:|:-----:|:----------:|:-----:|:---:|:---:|:------------------------|
 | [tty_sw_twi_m16a.hex](https://github.com/0x007E/oled/releases/latest/download/tty_sw_twi_m16a.hex)     | tty   | ATmega16A  | 12MHz | PB0 | PB1 | TTY with software TWI   |
@@ -21,7 +25,14 @@ This project includes a easy to use OLED library for an `SSD1306`/`SH1106` that 
 | [frame_sw_twi_m16a.hex](https://github.com/0x007E/oled/releases/latest/download/frame_sw_twi_m16a.hex) | frame | ATmega16A  | 12MHz | PB0 | PB1 | FRAME with software TWI |
 | [frame_hw_twi_m16a.hex](https://github.com/0x007E/oled/releases/latest/download/frame_hw_twi_m16a.hex) | frame | ATmega16A  | 12MHz | PC0 | PC1 | FRAME with hardware TWI |
 
-> Download all firmware releases as [zip](https://github.com/0x007E/oled/releases/latest/download/firmware.zip) | [tar.gz](https://github.com/0x007E/oled/releases/latest/download/firmware.tar.gz)
+### ATmega4808
+
+| Name                                                                                                   | Type  | Controller | CLOCK | SCL | SDA | Description             |
+|:------------------------------------------------------------------------------------------------------:|:-----:|:----------:|:-----:|:---:|:---:|:------------------------|
+| [tty_sw_twi_m4808.hex](https://github.com/0x007E/oled/releases/latest/download/tty_sw_twi_m4808.hex)     | tty   | ATmega4808  | 20MHz | PD2 | PD3 | TTY with software TWI   |
+| [tty_hw_twi_m4808.hex](https://github.com/0x007E/oled/releases/latest/download/tty_hw_twi_m4808.hex)     | tty   | ATmega4808  | 20MHz | PC3 | PC2 | TTY with hardware TWI   |
+| [frame_sw_twi_m4808.hex](https://github.com/0x007E/oled/releases/latest/download/frame_sw_twi_m4808.hex) | frame | ATmega4808  | 20MHz | PD2 | PD3 | FRAME with software TWI |
+| [frame_hw_twi_m4808.hex](https://github.com/0x007E/oled/releases/latest/download/frame_hw_twi_m4808.hex) | frame | ATmega4808  | 20MHz | PC3 | PC2 | FRAME with hardware TWI |
 
 ## Quick startup guide
 
@@ -29,6 +40,31 @@ The library to control the display supports two modes.
 
 - `tty` - Text Mode
 - `frame` - Graphical Mode
+
+### Platform selection
+
+The `oled` library currently supports the `avr` and `avr0` plattform. The platform can be defined within the `oled.h` library. By default `avr` is selected.
+
+```c
+// For AVR platform
+#define OLED_HAL_PTATFORM avr
+
+// For AVR0 platform
+#define OLED_HAL_PLATFORM avr0
+```
+
+> Microchip Studio compiles all libraries in the folders by default. Therefore, either avr or avr0 should be created in the folder structure and the library that is not used should be removed. To select the correct platform and set the clock speed correctly in the libraries, it is best to create a global define in Microchip studio.
+
+```c 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !! IMPORTANT NOTICE                                  !!
+// !! Setup following symbols:                          !!
+// !! Project-Settings -> AVR/GNU C-Compiler -> Symbols !!
+// !!                                                   !!
+// !! F_CPU=20000000UL                                  !!
+// !! OLED_HAL_PLATFORM=avr0                            !!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+```
 
 ### Communication
 
@@ -150,7 +186,6 @@ int main(void)
 ## Datasheets
 
 - [SSD1306](https://cdn-shop.adafruit.com/datasheets/SSD1306.pdf)
-
 
 ---
 
