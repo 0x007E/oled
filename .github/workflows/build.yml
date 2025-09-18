@@ -64,7 +64,9 @@ jobs:
           
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
-            -I ./DFP/include -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
             -I ./DFP/include \
@@ -144,7 +146,9 @@ jobs:
           
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
-            -I ./DFP/include -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
             -I ./DFP/include \
@@ -222,7 +226,9 @@ jobs:
           
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
-            -I ./DFP/include -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
             -I ./DFP/include \
@@ -302,7 +308,9 @@ jobs:
           
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
-            -I ./DFP/include -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
             -I ./DFP/include \
@@ -377,10 +385,12 @@ jobs:
 
             echo "$libraries"
           }
-          
+
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
-            -I ./DFP/include -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
             -I ./DFP/include \
@@ -460,7 +470,9 @@ jobs:
           
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
-            -I ./DFP/include -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
             -I ./DFP/include \
@@ -538,7 +550,9 @@ jobs:
           
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
-            -I ./DFP/include -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
             -I ./DFP/include \
@@ -618,7 +632,9 @@ jobs:
           
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
-            -I ./DFP/include -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
             -I ./DFP/include \
