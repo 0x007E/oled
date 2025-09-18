@@ -119,7 +119,7 @@
 		 *
 		 * Selecting a TWI port mapping is essential when adapting hardware layouts or using multiple TWI modules. In dual TWI mode, each mapping determines the location of slave pins separately from master pins.
 		 */
-        #define TWI_PORTMUX PORTMUX_TWI0_DEFAULT_gc
+        #define TWI_PORTMUX PORTMUX_TWI0_ALT2_gc
     #endif
 
     #ifndef TWI_TWIE
