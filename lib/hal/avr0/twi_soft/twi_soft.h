@@ -61,7 +61,7 @@
          * @details
          * Defining this macro enables the use of internal pull-up resistors on the `SDA` and `SCL` lines of the software `TWI` implementation. When enabled, the software configures the GPIO pins with internal pull-ups, eliminating the need for external pull-up resistors if the hardware supports it. If this macro is not defined, the software assumes external pull-up resistors are present and handles the lines differently.
          */
-        // #define TWI_SOFT_PULLUP_ENABLE
+        #define TWI_SOFT_PULLUP_ENABLE
 
         #ifdef _DOXYGEN_    // Used for documentation, can be ignored
             #define TWI_SOFT_PULLUP_ENABLE
@@ -76,7 +76,7 @@
          * @details
          * This macro defines the PORT register used for the software `TWI` (`I2C`) implementation on the AVR microcontroller. It is responsible for writing output values to the GPIO pins connected to the `TWI` clock (`SCL`) and data (`SDA`) lines. By default, it is set to `VPORTB`, but can be redefined to match the actual hardware wiring in the project.
          */
-        #define TWI_SOFT_PORT PORTB
+        #define TWI_SOFT_PORT PORTD
     #endif
 
     #ifndef TWI_SOFT_SCL
@@ -87,10 +87,10 @@
          * @details
          * This macro defines the specific pin number on the port that is used for the software `TWI` clock line (`SCL`) in the AVR microcontroller. By default, it is set to `PINB0`, but can be redefined to fit the hardware
          */
-        #define TWI_SOFT_SCL SET_PIN(0, _bm)
+        #define TWI_SOFT_SCL SET_PIN(2, _bm)
         
         #ifndef TWI_SOFT_SCL_CTRL
-			#define TWI_SOFT_SCL_CTRL SET_PIN(0, CTRL)
+			#define TWI_SOFT_SCL_CTRL SET_PIN(2, CTRL)
         #endif
     #endif
 
@@ -102,10 +102,10 @@
          * @details
          * This macro defines the specific pin number on the port that is used for the software `TWI` data line (`SDA`) in the AVR microcontroller. By default, it is set to `PINB1`, but can be redefined to fit the hardware
          */
-         #define TWI_SOFT_SDA SET_PIN(1, _bm)
+         #define TWI_SOFT_SDA SET_PIN(3, _bm)
 		 
 		 #ifndef TWI_SOFT_SDA_CTRL
-			#define TWI_SOFT_SDA_CTRL SET_PIN(1, CTRL)
+			#define TWI_SOFT_SDA_CTRL SET_PIN(3, CTRL)
 		 #endif
     #endif
 
