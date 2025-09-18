@@ -3,7 +3,7 @@
  * @brief Source file with implementation of software TWI/I2C functions and macros.
  * 
  * This file contains the definitions of function implementations and macros 
- * for software-based TWI (I2C) communication on AVR microcontrollers.
+ * for software-based TWI (I2C) communication on AVR-0/1/2-Series microcontrollers.
  * 
  * @author g.raf
  * @date 2025-09-01
@@ -14,7 +14,7 @@
  * 
  * @note This file is part of a larger project and subject to the license specified in the repository. For updates and the complete revision history, see the GitHub repository.
  * 
- * @see https://github.com/0x007e/mega "AVR ATmega GitHub Repository"
+ * @see https://github.com/0x007e/avr0 "AVR ATmega GitHub Repository"
  */
 
 #include "twi_soft.h"
@@ -31,7 +31,12 @@ unsigned char twi_soft_bus_status;
  */
 unsigned char twi_soft_init(void)
 {
-    TWI_SOFT_PORT &= ~((1<<TWI_SOFT_SCL) | (1<<TWI_SOFT_SDA));
+    TWI_SOFT_PORT.OUTCLR = (TWI_SOFT_SCL | TWI_SOFT_SDA);
+
+	#ifdef TWI_SOFT_PULLUP_ENABLE
+		TWI_SOFT_PORT.TWI_SOFT_SCL_CTRL = PORT_PULLUPEN_bm;
+		TWI_SOFT_PORT.TWI_SOFT_SDA_CTRL = PORT_PULLUPEN_bm;
+	#endif
 
     SCL_HIGH();
     SDA_HIGH();
@@ -39,8 +44,8 @@ unsigned char twi_soft_init(void)
     _delay_us(TWI_SOFT_CLOCK_PULSE_US);
     _delay_us(TWI_SOFT_CLOCK_PULSE_US);
 
-    if( !(TWI_SOFT_PIN & (1<<TWI_SOFT_SCL)) || 
-        !(TWI_SOFT_PIN & (1<<TWI_SOFT_SDA)))
+    if( !(TWI_SOFT_PORT.IN & TWI_SOFT_SCL) || 
+        !(TWI_SOFT_PORT.IN & TWI_SOFT_SDA))
     {
         return TWI_SOFT_STATUS_BUS_ERROR;
     }
@@ -55,8 +60,13 @@ unsigned char twi_soft_init(void)
  */
 void twi_soft_disable(void)
 {
-    TWI_SOFT_PORT &= ~((1<<TWI_SOFT_SCL) | (1<<TWI_SOFT_SDA));
-    TWI_SOFT_DDR &= ~((1<<TWI_SOFT_SCL) | (1<<TWI_SOFT_SDA));
+	TWI_SOFT_PORT.OUTCLR = (TWI_SOFT_SCL | TWI_SOFT_SDA);
+	TWI_SOFT_PORT.DIRCLR = (TWI_SOFT_SCL | TWI_SOFT_SDA);
+	
+	#ifdef TWI_SOFT_PULLUP_ENABLE
+		TWI_SOFT_PORT.TWI_SOFT_SCL_CTRL &= ~PORT_PULLUPEN_bm;
+		TWI_SOFT_PORT.TWI_SOFT_SDA_CTRL &= ~PORT_PULLUPEN_bm;
+	#endif
 }
 
 /**
@@ -173,14 +183,14 @@ TWI_Error twi_soft_set(unsigned char data)
 
         // Check for arbitration
         if( (temp == 1) &&
-            (!(TWI_SOFT_PIN & (1<<TWI_SOFT_SDA))))
+            (!(TWI_SOFT_PORT.IN & TWI_SOFT_SDA)))
         {
             return TWI_Arbitration;
         }
         SCL_HIGH();
 
         // Clock stretching active?
-        while(!(TWI_SOFT_PIN & (1<<TWI_SOFT_SCL)))
+        while(!(TWI_SOFT_PORT.IN & TWI_SOFT_SCL))
         {
             asm volatile("NOP");
         }
@@ -192,7 +202,7 @@ TWI_Error twi_soft_set(unsigned char data)
 
     TWI_Error temp = TWI_Ack;
 
-    if(!(TWI_SOFT_PIN & (1<<TWI_SOFT_SDA)))
+    if(!(TWI_SOFT_PORT.IN & TWI_SOFT_SDA))
     {
         temp =  TWI_None;
     }
@@ -225,7 +235,7 @@ TWI_Error twi_soft_get(unsigned char *data, TWI_Acknowledge acknowledge)
         SCL_HIGH();
 
         // Clock stretching active?
-        while (!(TWI_SOFT_PIN & (1<<TWI_SOFT_SCL)))
+        while (!(TWI_SOFT_PORT.IN & TWI_SOFT_SCL))
         {
             asm volatile("NOP");
         }
@@ -233,7 +243,7 @@ TWI_Error twi_soft_get(unsigned char *data, TWI_Acknowledge acknowledge)
 
         // Read bit from SDA
         received <<= 1;
-        if (TWI_SOFT_PIN & (1<<TWI_SOFT_SDA))
+        if (TWI_SOFT_PORT.IN & TWI_SOFT_SDA)
         {
             received |= 1;
         }
@@ -256,7 +266,7 @@ TWI_Error twi_soft_get(unsigned char *data, TWI_Acknowledge acknowledge)
     SCL_HIGH();
 
      // Clock stretching active?
-    while (!(TWI_SOFT_PIN & (1<<TWI_SOFT_SCL)))
+    while (!(TWI_SOFT_PORT.IN & TWI_SOFT_SCL))
     {
         asm volatile("NOP");
     }

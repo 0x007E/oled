@@ -14,53 +14,33 @@
  * 
  * @note This file is part of a larger project and subject to the license specified in the repository. For updates and the complete revision history, see the GitHub repository.
  * 
- * @see https://github.com/0x007e/mega "AVR ATmega GitHub Repository"
+ * @see https://github.com/0x007e/avr "AVR ATmega GitHub Repository"
  */
 
 #include "twi.h"
 
 /**
- * @brief Initialize the TWI (I2C) hardware interface.
- *
- * @param operation Specifies the mode of operation:
- *                  - 0x00 (TWI_Mater) for master mode (default)
- *                  - 0x01 (TWI_Slave) for slave mode
+ * @brief Initialize the TWI (I2C) hardware interface in master mode.
  *
  * @return Returns the current TWI status byte after initialization.
  *
  * @details
- * This function configures the `TWI` hardware registers to initialize the bus in either master or slave mode.
+ * This function configures the `TWI` hardware registers to initialize the bus in master mode.
  * 
  * In master mode, it sets the bitrate and prescaler according to predefined macros.
  * 
- * In slave mode, it sets the slave address, enables general call reception if defined, configures the prescaler, and enables the `TWI` interface.
- * 
- * @note If TWI interrupt processing is enabled (`TWI_TWIE`), interrupts are activated and global interrupts are enabled.
+ * @note If TWI interrupt processing is enabled (`TWI_TWIE`), interrupts are activated.
  * 
  * The function returns the initial TWI status for further status checking after initialization.
  */
-unsigned char twi_init(TWI_Mode operation)
+unsigned char twi_init(void)
 {
-    // Set Slave Address and general Call
-    TWAR = ((unsigned char)(((unsigned char)(TWI_ADDRESS))<<1)) | (0x01 & ((unsigned char)(TWI_BROADCAST)));
-    
-    // Master / Slave setup
-    switch(operation)
-    {
-        case TWI_Slave :    // Slave Mode
-            TWSR &= ~(0x03);                        // Reset TWI Prescaler
-            TWCR = (1<<TWEA) | (1<<TWEN);           // Enable TWI Bus and Acknowledge to TWI_ADDR or general call
-            break;
-        default :           // Master mode
-            TWBR = (unsigned char)(TWI_BITRATE);    // Setup TWI Bitrate
-            TWSR = (unsigned char)(TWI_PRESCALER);   // Setup TWI Prescaler
-            break;
-    }
-    
+    TWBR = (unsigned char)(TWI_BITRATE);    // Setup TWI Bitrate
+    TWSR = (unsigned char)(TWI_PRESCALER);   // Setup TWI Prescaler
+			
     // TWI interrupt setup
     #ifdef TWI_TWIE
         TWCR  |= (1<<TWIE);
-        sei();
     #endif
 
     // Return message initialization

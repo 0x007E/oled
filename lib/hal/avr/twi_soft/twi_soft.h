@@ -14,7 +14,7 @@
  * 
  * @note This file is part of a larger project and subject to the license specified in the repository. For updates and the complete revision history, see the GitHub repository.
  * 
- * @see https://github.com/0x007e/mega  "AVR ATmega GitHub Repository"
+ * @see https://github.com/0x007e/avr  "AVR ATmega GitHub Repository"
  */
 
 #ifndef TWI_SOFT_H_
@@ -170,8 +170,8 @@
         #include <avr/interrupt.h>
     #endif
 
-    #include "../common/defines/TWI_defines.h"
-    #include "../common/enums/TWI_enums.h"
+    #include "../../../common/defines/TWI_defines.h"
+    #include "../../../common/enums/TWI_enums.h"
 
     /**
      * @defgroup TWI_Control_Macros Software TWI (I2C) Control Macros
@@ -185,15 +185,15 @@
      * @{
      */
     #ifdef TWI_SOFT_PULLUP_ENABLE
-        #define SCL_LOW()  { TWI_SOFT_PORT &= ~(1<<TWI_SOFT_SCL); TWI_SOFT_DDR |= (1<<TWI_SOFT_SCL); TWI_SOFT_PORT &= ~(1<<TWI_SOFT_SCL); }
-        #define SDA_LOW()  { TWI_SOFT_PORT &= ~(1<<TWI_SOFT_SDA); TWI_SOFT_DDR |= (1<<TWI_SOFT_SDA); TWI_SOFT_PORT &= ~(1<<TWI_SOFT_SDA); }
+        #define SCL_LOW()  { TWI_SOFT_PORT &= ~(1<<TWI_SOFT_SCL); TWI_SOFT_DDR |= (1<<TWI_SOFT_SCL); }
+        #define SDA_LOW()  { TWI_SOFT_PORT &= ~(1<<TWI_SOFT_SDA); TWI_SOFT_DDR |= (1<<TWI_SOFT_SDA); }
         #define SCL_HIGH() { TWI_SOFT_DDR &= ~(1<<TWI_SOFT_SCL);  TWI_SOFT_PORT |= (1<<TWI_SOFT_SCL); }
         #define SDA_HIGH() { TWI_SOFT_DDR &= ~(1<<TWI_SOFT_SDA);  TWI_SOFT_PORT |= (1<<TWI_SOFT_SDA); }
     #else
-        #define SCL_LOW()  { TWI_SOFT_DDR |= (1<<TWI_SOFT_SCL); }
-        #define SDA_LOW()  { TWI_SOFT_DDR |= (1<<TWI_SOFT_SDA); }
-        #define SDA_HIGH() { TWI_SOFT_DDR &= ~(1<<TWI_SOFT_SDA); }
-        #define SCL_HIGH() { TWI_SOFT_DDR &= ~(1<<TWI_SOFT_SCL); }
+        #define SCL_LOW()  { TWI_SOFT_PORT &= ~(1<<TWI_SOFT_SCL); TWI_SOFT_DDR |= (1<<TWI_SOFT_SCL); }
+        #define SDA_LOW()  { TWI_SOFT_PORT &= ~(1<<TWI_SOFT_SCL); TWI_SOFT_DDR |= (1<<TWI_SOFT_SDA); }
+        #define SDA_HIGH() { TWI_SOFT_DDR &= ~(1<<TWI_SOFT_SDA);  TWI_SOFT_PORT &= ~(1<<TWI_SOFT_SCL); }
+        #define SCL_HIGH() { TWI_SOFT_DDR &= ~(1<<TWI_SOFT_SCL);  TWI_SOFT_PORT &= ~(1<<TWI_SOFT_SCL); }
     #endif
     /** @} */
 

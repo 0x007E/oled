@@ -78,7 +78,7 @@ void oled_init(void)
     #ifdef OLED_USE_SOFT_TWI
         twi_soft_init();
     #else
-        twi_init(TWI_Master);
+        twi_init();
     #endif
 	
 	OLED_START(TWI_Write);

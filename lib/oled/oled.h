@@ -46,6 +46,21 @@
 		 */
         #define OLED_USE_SOFT_TWI
     #endif
+    
+    #ifndef OLED_HAL_PLATFORM
+		/**
+         * @def OLED_HAL_PLATFORM
+         * @brief Sets the target platform for the OLED hardware abstraction layer (HAL), e.g., `avr` or `avr0`.
+         *
+         * @details
+         * Define this macro with the name of the target platform to select the corresponding platform-specific implementations (such as BUS or TWI access) for the OLED driver.
+         *
+         * Common values are `avr` (classic AVR architecture) or `avr0` (AVR0/1 series).
+         *
+         * @note Set this macro as global define as a compiler symbol to select the correct libraries of the whole project.
+         */
+        #define OLED_HAL_PLATFORM avr
+    #endif
 
 	#ifndef OLED_ADDRESS
 		/**
@@ -571,7 +586,9 @@
 	#else
 		#include <avr/pgmspace.h>
 	#endif
-	
+
+	#include "../common/macros/STRING_macros.h"
+
 	/**
 	 * @defgroup OLED_TWI_Control_Macros OLED Software/Hardware TWI (I2C) Control Macros
 	 * @brief Macros for abstracting OLED TWI (I2C) communication interface.
@@ -590,13 +607,15 @@
      * @{
      */
     #ifdef OLED_USE_SOFT_TWI
-        #include "../twi_soft/twi_soft.h"
+        #define TWI_SOFT_HEADER _STR(../hal/OLED_HAL_PLATFORM/twi_soft/twi_soft.h)
+        #include TWI_SOFT_HEADER
 
         #define OLED_START(MODE) { twi_soft_start(); twi_soft_address(OLED_ADDRESS, MODE); }
         #define OLED_STOP() { twi_soft_stop(); _delay_us(OLED_IDLE_TIME_US); }
         #define OLED_DATA() (twi_soft_set(OLED_CONTROL_DATA))
     #else
-        #include "../twi/twi.h"
+        #define TWI_HEADER _STR(../hal/OLED_HAL_PLATFORM/twi/twi.h)
+		#include TWI_HEADER
 
         #define OLED_START(MODE) { twi_start(); twi_address(OLED_ADDRESS, MODE); }
         #define OLED_STOP() { twi_stop(); _delay_us(OLED_IDLE_TIME_US); }
