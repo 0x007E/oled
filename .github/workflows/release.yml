@@ -61,7 +61,9 @@ jobs:
           
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
-            -I ./DFP/include -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
             -I ./DFP/include \
@@ -141,7 +143,9 @@ jobs:
           
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
-            -I ./DFP/include -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
             -I ./DFP/include \
@@ -219,7 +223,9 @@ jobs:
           
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
-            -I ./DFP/include -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
             -I ./DFP/include \
@@ -299,7 +305,9 @@ jobs:
           
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
-            -I ./DFP/include -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
           ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
             -B ./DFP/gcc/dev/${{ env.DEVICE }} \
             -I ./DFP/include \
@@ -321,9 +329,333 @@ jobs:
         name: firmware-m16a-frame-hardware-twi
         path: ${{ env.OUTPUT_FOLDER }}
         retention-days: 1
+
+  build-firmware-m4808-tty-software-twi:
+    env:
+      TOOLCHAIN: "3.7.0.1796"
+      DFP: "ATmega_DFP.2.2.509"
+      DEVICE: "atmega4808"
+      OUTPUT_FOLDER: "./output"
+      LIBRARY_PATH: "./lib"
+      PROJECT_PATH: "./demo-avr0/tty-avr0"
+      FIRMWARE_NAME: "tty_sw_twi_m4808"
+      PREPROCESSOR: "-DF_CPU=20000000UL -DOLED_HAL_PLATFORM=avr0"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Fetch repository
+      uses: actions/checkout@v5
+    - name: Copy License
+      run: |
+          mkdir -p ${{ env.OUTPUT_FOLDER }}
+          cp ./LICENSE.md ${{ env.OUTPUT_FOLDER }}
+    - name: Install zip
+      run: sudo apt-get install -y zip
+    - name: install-build-tools
+      run: |
+          wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
+          tar -xf *.tar.gz
+    - name: install-dfp-package
+      run: |
+          wget http://packs.download.atmel.com/Atmel.${{ env.DFP }}.atpack
+          unzip *.atpack -d ./DFP
+    - name: build-firmware
+      run: |
+          mkdir -p temp
+          rm -rf ./temp/*
+          rm -rf ./lib/hal/avr/*
+
+          build_with_defines() {
+            local defines="$1"
+            local libraries=""
+
+            while read -r file; do
+              local filename=$(basename -- "$file")
+              filename="${filename%.*}"
+
+              ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
+                -B ./DFP/gcc/dev/${{ env.DEVICE }} \
+                $defines \
+                -I ./DFP/include -c "${file}" -o "./temp/${filename}.o"
+
+              libraries+="./temp/${filename}.o "
+            done < <(find "${{ env.LIBRARY_PATH }}" -type f -name '*.c')
+
+            echo "$libraries"
+          }
+
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
+            -B ./DFP/gcc/dev/${{ env.DEVICE }} \
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
+            -B ./DFP/gcc/dev/${{ env.DEVICE }} \
+            -I ./DFP/include \
+            -o ./temp/main.elf ./temp/main.o \
+            ${{ env.PREPROCESSOR }} \
+            $(build_with_defines "${{ env.PREPROCESSOR }}")
+          
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-objcopy -j .text -j .data \
+            -O ihex ./temp/main.elf ${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-objcopy -j .eeprom --change-section-lma .eeprom=0 \
+            -O ihex ./temp/main.elf ${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
+
+          tar -czvf build.tar.gz ${{ env.OUTPUT_FOLDER }}
+          zip -r build.zip ${{ env.OUTPUT_FOLDER }}
+
+    - name: upload-firmware
+      uses: actions/upload-artifact@v4
+      with:
+        name: firmware-m4808-tty-software-twi
+        path: ${{ env.OUTPUT_FOLDER }}
+        retention-days: 1
+
+  build-firmware-m4808-tty-hardware-twi:
+    env:
+      TOOLCHAIN: "3.7.0.1796"
+      DFP: "ATmega_DFP.2.2.509"
+      DEVICE: "atmega4808"
+      OUTPUT_FOLDER: "./output"
+      LIBRARY_PATH: "./lib"
+      PROJECT_PATH: "./demo-avr0/tty-avr0"
+      FIRMWARE_NAME: "tty_hw_twi_m4808"
+      PREPROCESSOR: "-DF_CPU=20000000UL -DOLED_HAL_PLATFORM=avr0"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Fetch repository
+      uses: actions/checkout@v5
+    - name: Copy License
+      run: |
+          mkdir -p ${{ env.OUTPUT_FOLDER }}
+          cp ./LICENSE.md ${{ env.OUTPUT_FOLDER }}
+    - name: Install zip
+      run: sudo apt-get install -y zip
+    - name: install-build-tools
+      run: |
+          wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
+          tar -xf *.tar.gz
+    - name: install-dfp-package
+      run: |
+          wget http://packs.download.atmel.com/Atmel.${{ env.DFP }}.atpack
+          unzip *.atpack -d ./DFP
+    - name: build-firmware
+      run: |
+          mkdir -p temp
+          rm -rf ./temp/*
+          rm -rf ./lib/hal/avr/*
+
+          sed -i 's/^\(#define OLED_USE_SOFT_TWI\)/\/\/\1/' ${{ env.LIBRARY_PATH }}/oled/oled.h
+
+          build_with_defines() {
+            local defines="$1"
+            local libraries=""
+
+            while read -r file; do
+              local filename=$(basename -- "$file")
+              filename="${filename%.*}"
+
+              ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
+                -B ./DFP/gcc/dev/${{ env.DEVICE }} \
+                $defines \
+                -I ./DFP/include -c "${file}" -o "./temp/${filename}.o"
+
+              libraries+="./temp/${filename}.o "
+            done < <(find "${{ env.LIBRARY_PATH }}" -type f -name '*.c')
+
+            echo "$libraries"
+          }
+          
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
+            -B ./DFP/gcc/dev/${{ env.DEVICE }} \
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
+            -B ./DFP/gcc/dev/${{ env.DEVICE }} \
+            -I ./DFP/include \
+            -o ./temp/main.elf ./temp/main.o \
+            ${{ env.PREPROCESSOR }} \
+            $(build_with_defines "${{ env.PREPROCESSOR }}")
+          
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-objcopy -j .text -j .data \
+            -O ihex ./temp/main.elf ${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-objcopy -j .eeprom --change-section-lma .eeprom=0 \
+            -O ihex ./temp/main.elf ${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
+
+          tar -czvf build.tar.gz ${{ env.OUTPUT_FOLDER }}
+          zip -r build.zip ${{ env.OUTPUT_FOLDER }}
+
+    - name: upload-firmware
+      uses: actions/upload-artifact@v4
+      with:
+        name: firmware-m4808-tty-hardware-twi
+        path: ${{ env.OUTPUT_FOLDER }}
+        retention-days: 1
+
+  build-firmware-m4808-frame-software-twi:
+    env:
+      TOOLCHAIN: "3.7.0.1796"
+      DFP: "ATmega_DFP.2.2.509"
+      DEVICE: "atmega4808"
+      OUTPUT_FOLDER: "./output"
+      LIBRARY_PATH: "./lib"
+      PROJECT_PATH: "./demo-avr0/frame-avr0"
+      FIRMWARE_NAME: "frame_sw_twi_m4808"
+      PREPROCESSOR: "-DF_CPU=20000000UL -DOLED_HAL_PLATFORM=avr0"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Fetch repository
+      uses: actions/checkout@v5
+    - name: Copy License
+      run: |
+          mkdir -p ${{ env.OUTPUT_FOLDER }}
+          cp ./LICENSE.md ${{ env.OUTPUT_FOLDER }}
+    - name: Install zip
+      run: sudo apt-get install -y zip
+    - name: install-build-tools
+      run: |
+          wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
+          tar -xf *.tar.gz
+    - name: install-dfp-package
+      run: |
+          wget http://packs.download.atmel.com/Atmel.${{ env.DFP }}.atpack
+          unzip *.atpack -d ./DFP
+    - name: build-firmware
+      run: |
+          mkdir -p temp
+          rm -rf ./temp/*
+          rm -rf ./lib/hal/avr/*
+
+          build_with_defines() {
+            local defines="$1"
+            local libraries=""
+
+            while read -r file; do
+              local filename=$(basename -- "$file")
+              filename="${filename%.*}"
+
+              ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
+                -B ./DFP/gcc/dev/${{ env.DEVICE }} \
+                $defines \
+                -I ./DFP/include -c "${file}" -o "./temp/${filename}.o"
+
+              libraries+="./temp/${filename}.o "
+            done < <(find "${{ env.LIBRARY_PATH }}" -type f -name '*.c')
+
+            echo "$libraries"
+          }
+          
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
+            -B ./DFP/gcc/dev/${{ env.DEVICE }} \
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
+            -B ./DFP/gcc/dev/${{ env.DEVICE }} \
+            -I ./DFP/include \
+            -o ./temp/main.elf ./temp/main.o \
+            ${{ env.PREPROCESSOR }} \
+            $(build_with_defines "${{ env.PREPROCESSOR }}")
+          
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-objcopy -j .text -j .data \
+            -O ihex ./temp/main.elf ${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-objcopy -j .eeprom --change-section-lma .eeprom=0 \
+            -O ihex ./temp/main.elf ${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
+
+          tar -czvf build.tar.gz ${{ env.OUTPUT_FOLDER }}
+          zip -r build.zip ${{ env.OUTPUT_FOLDER }}
+
+    - name: upload-firmware
+      uses: actions/upload-artifact@v4
+      with:
+        name: firmware-m4808-frame-software-twi
+        path: ${{ env.OUTPUT_FOLDER }}
+        retention-days: 1
+
+  build-firmware-m4808-frame-hardware-twi:
+    env:
+      TOOLCHAIN: "3.7.0.1796"
+      DFP: "ATmega_DFP.2.2.509"
+      DEVICE: "atmega4808"
+      OUTPUT_FOLDER: "./output"
+      LIBRARY_PATH: "./lib"
+      PROJECT_PATH: "./demo-avr0/frame-avr0"
+      FIRMWARE_NAME: "frame_hw_twi_m4808"
+      PREPROCESSOR: "-DF_CPU=20000000UL -DOLED_HAL_PLATFORM=avr0"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Fetch repository
+      uses: actions/checkout@v5
+    - name: Copy License
+      run: |
+          mkdir -p ${{ env.OUTPUT_FOLDER }}
+          cp ./LICENSE.md ${{ env.OUTPUT_FOLDER }}
+    - name: Install zip
+      run: sudo apt-get install -y zip
+    - name: install-build-tools
+      run: |
+          wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
+          tar -xf *.tar.gz
+    - name: install-dfp-package
+      run: |
+          wget http://packs.download.atmel.com/Atmel.${{ env.DFP }}.atpack
+          unzip *.atpack -d ./DFP
+    - name: build-firmware
+      run: |
+          mkdir -p temp
+          rm -rf ./temp/*
+          rm -rf ./lib/hal/avr/*
+
+          sed -i 's/^\(#define OLED_USE_SOFT_TWI\)/\/\/\1/' ${{ env.LIBRARY_PATH }}/oled/oled.h
+
+          build_with_defines() {
+            local defines="$1"
+            local libraries=""
+
+            while read -r file; do
+              local filename=$(basename -- "$file")
+              filename="${filename%.*}"
+
+              ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
+                -B ./DFP/gcc/dev/${{ env.DEVICE }} \
+                $defines \
+                -I ./DFP/include -c "${file}" -o "./temp/${filename}.o"
+
+              libraries+="./temp/${filename}.o "
+            done < <(find "${{ env.LIBRARY_PATH }}" -type f -name '*.c')
+
+            echo "$libraries"
+          }
+          
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -x c -O1 -mmcu=${{ env.DEVICE }} -std=gnu99 \
+            -B ./DFP/gcc/dev/${{ env.DEVICE }} \
+            -I ./DFP/include \
+            ${{ env.PREPROCESSOR }} \
+            -c ${{ env.PROJECT_PATH }}/main.c -o ./temp/main.o
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-gcc -g -mmcu=${{ env.DEVICE }} \
+            -B ./DFP/gcc/dev/${{ env.DEVICE }} \
+            -I ./DFP/include \
+            -o ./temp/main.elf ./temp/main.o \
+            ${{ env.PREPROCESSOR }} \
+            $(build_with_defines "${{ env.PREPROCESSOR }}")
+          
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-objcopy -j .text -j .data \
+            -O ihex ./temp/main.elf ${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
+          ./avr8-gnu-toolchain-linux_x86_64/bin/avr-objcopy -j .eeprom --change-section-lma .eeprom=0 \
+            -O ihex ./temp/main.elf ${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
+
+          tar -czvf build.tar.gz ${{ env.OUTPUT_FOLDER }}
+          zip -r build.zip ${{ env.OUTPUT_FOLDER }}
+
+    - name: upload-firmware
+      uses: actions/upload-artifact@v4
+      with:
+        name: firmware-m4808-frame-hardware-twi
+        path: ${{ env.OUTPUT_FOLDER }}
+        retention-days: 1
   
   create-release:
-    needs: [build-firmware-m16a-tty-software-twi, build-firmware-m16a-tty-hardware-twi, build-firmware-m16a-frame-software-twi, build-firmware-m16a-frame-hardware-twi]
+    needs: [build-firmware-m16a-tty-software-twi, build-firmware-m16a-tty-hardware-twi, build-firmware-m16a-frame-software-twi, build-firmware-m16a-frame-hardware-twi,build-firmware-m4808-tty-software-twi, build-firmware-m4808-tty-hardware-twi, build-firmware-m4808-frame-software-twi, build-firmware-m4808-frame-hardware-twi]
     runs-on: ubuntu-latest
     steps:
     - name: Create Release
@@ -362,6 +694,30 @@ jobs:
       with:
         name: firmware-m16a-frame-hardware-twi
         path: ./artifact/frame-hardware-twi
+
+    - name: Download AVR0 TTY Software-TWI Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: firmware-m4808-tty-software-twi
+        path: ./artifact/avr0-tty-software-twi
+    
+    - name: Download AVR0 TTY Hardware-TWI Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: firmware-m4808-tty-hardware-twi
+        path: ./artifact/avr0-tty-hardware-twi
+    
+    - name: Download AVR0 FRAME Software-TWI Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: firmware-m4808-frame-software-twi
+        path: ./artifact/avr0-frame-software-twi
+    
+    - name: Download AVR0 FRAME Hardware-TWI Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: firmware-m4808-frame-hardware-twi
+        path: ./artifact/avr0-frame-hardware-twi
 
     - name: Display structure
       run: ls -R ./artifact
@@ -411,6 +767,46 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./artifact/frame-hardware-twi/frame_hw_twi_m16a.hex
         asset_name: frame_hw_twi_m16a.hex
+        asset_content_type: application/octet-stream
+
+    - name: Upload AVR0 TTY Software-TWI HEX
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./artifact/avr0-tty-software-twi/tty_sw_twi_m4808.hex
+        asset_name: tty_sw_twi_m4808.hex
+        asset_content_type: application/octet-stream
+
+    - name: Upload AVR0 TTY Hardware-TWI HEX
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./artifact/avr0-tty-hardware-twi/tty_hw_twi_m4808.hex
+        asset_name: tty_hw_twi_m4808.hex
+        asset_content_type: application/octet-stream
+
+    - name: Upload AVR0 FRAME Software-TWI HEX
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./artifact/avr0-frame-software-twi/frame_sw_twi_m4808.hex
+        asset_name: frame_sw_twi_m4808.hex
+        asset_content_type: application/octet-stream
+
+    - name: Upload AVR0 FRAME Hardware-TWI HEX
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./artifact/avr0-frame-hardware-twi/frame_hw_twi_m4808.hex
+        asset_name: frame_hw_twi_m4808.hex
         asset_content_type: application/octet-stream
 
     - name: Upload Firmware Build Asset
