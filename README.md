@@ -186,6 +186,8 @@ int main(void)
 ## Datasheets
 
 - [SSD1306](https://cdn-shop.adafruit.com/datasheets/SSD1306.pdf)
+- [ATmega16A](https://ww1.microchip.com/downloads/en/devicedoc/atmel-8154-8-bit-avr-atmega16a_datasheet.pdf)
+- [ATmega4808](https://ww1.microchip.com/downloads/en/DeviceDoc/ATmega4808-4809-Data-Sheet-DS40002173A.pdf)
 
 ---
 
