@@ -22,20 +22,7 @@
 #define TWI_ENUM_H_
 
     #include "../defines/TWI_defines.h"
-
-    /**
-     * @enum TWI_Mode_t
-     * @brief Defines the mode of operation for the TWI interface.
-     *
-     * @details
-     * This enumeration specifies whether the software TWI (I2C) interface
-     * operates as a slave or as a master device on the bus.
-     */
-    enum TWI_Mode_t
-    {
-        TWI_Slave=0,    /**< Operate as a TWI slave device */
-        TWI_Master=1    /**< Operate as a TWI master device */
-    };
+    
     /**
      * @typedef TWI_Mode
      * @brief Alias for enum TWI_Mode_t representing TWI device mode.
@@ -89,6 +76,7 @@
     enum TWI_Error_t
     {
         TWI_None=0,         /**< No error occurrs */
+		TWI_Run,			/**< Operation running */
         TWI_Start,          /**< Start condition error */
         TWI_Arbitration,    /**< Arbitration error */
         TWI_Ack,            /**< Acknowledge error */
