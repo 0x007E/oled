@@ -10,7 +10,7 @@
  * @version 1.0 Release
  * @copyright
  * Copyright (c) 2025 g.raf
- * Released under the MIT License. (see LICENSE in repository)
+ * Released under the GPLv3 License. (see LICENSE in repository)
  * 
  * @note This file is part of a larger project and subject to the license specified in the repository. For updates and the complete revision history, see the GitHub repository.
  * 
