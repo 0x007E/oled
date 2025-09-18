@@ -41,6 +41,7 @@ jobs:
       run: |
           mkdir -p temp
           rm -rf /temp/*
+          rm -rf /lib/hal/avr0/*
 
           build_with_defines() {
             local defines="$1"
@@ -118,6 +119,7 @@ jobs:
       run: |
           mkdir -p temp
           rm -rf /temp/*
+          rm -rf /lib/hal/avr0/*
 
           sed -i 's/^\(#define OLED_USE_SOFT_TWI\)/\/\/\1/' ${{ env.LIBRARY_PATH }}/oled/oled.h
 
@@ -197,6 +199,7 @@ jobs:
       run: |
           mkdir -p temp
           rm -rf /temp/*
+          rm -rf /lib/hal/avr0/*
 
           build_with_defines() {
             local defines="$1"
@@ -274,6 +277,7 @@ jobs:
       run: |
           mkdir -p temp
           rm -rf /temp/*
+          rm -rf /lib/hal/avr0/*
 
           sed -i 's/^\(#define OLED_USE_SOFT_TWI\)/\/\/\1/' ${{ env.LIBRARY_PATH }}/oled/oled.h
 
