@@ -120,7 +120,7 @@ jobs:
           rm -rf ./temp/*
           rm -rf ./lib/hal/avr0/*
 
-          sed -i 's/^\(#define OLED_USE_SOFT_TWI\)/\/\/\1/' ${{ env.LIBRARY_PATH }}/oled/oled.h
+          sed -i '/^\s*#define OLED_USE_SOFT_TWI/s/^/\/\//' ${{ env.LIBRARY_PATH }}/oled/oled.h
 
           build_with_defines() {
             local defines="$1"
@@ -282,7 +282,7 @@ jobs:
           rm -rf ./temp/*
           rm -rf ./lib/hal/avr0/*
 
-          sed -i 's/^\(#define OLED_USE_SOFT_TWI\)/\/\/\1/' ${{ env.LIBRARY_PATH }}/oled/oled.h
+          sed -i '/^\s*#define OLED_USE_SOFT_TWI/s/^/\/\//' ${{ env.LIBRARY_PATH }}/oled/oled.h
 
           build_with_defines() {
             local defines="$1"
@@ -444,7 +444,7 @@ jobs:
           rm -rf ./temp/*
           rm -rf ./lib/hal/avr/*
 
-          sed -i 's/^\(#define OLED_USE_SOFT_TWI\)/\/\/\1/' ${{ env.LIBRARY_PATH }}/oled/oled.h
+          sed -i '/^\s*#define OLED_USE_SOFT_TWI/s/^/\/\//' ${{ env.LIBRARY_PATH }}/oled/oled.h
 
           build_with_defines() {
             local defines="$1"
@@ -606,7 +606,7 @@ jobs:
           rm -rf ./temp/*
           rm -rf ./lib/hal/avr/*
 
-          sed -i 's/^\(#define OLED_USE_SOFT_TWI\)/\/\/\1/' ${{ env.LIBRARY_PATH }}/oled/oled.h
+          sed -i '/^\s*#define OLED_USE_SOFT_TWI/s/^/\/\//' ${{ env.LIBRARY_PATH }}/oled/oled.h
 
           build_with_defines() {
             local defines="$1"
