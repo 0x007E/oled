@@ -3,7 +3,56 @@ layout: post
 title: oled.h - OLED parameter definition
 categories: [Parameters]
 introduction: "Descriptions of parameters that can be adapted in the oled header"
+modified_date: 2025-09-19 13:37:37 +0200
 ---
+
+## Platform selection
+
+The hardware abstraction layer (`HAL`) of the OLED display currently supports the microcontrollers `avr` (ATmega16A, ...) and `avr0` (ATmegaXX08/ATTinyXX06, ...), which can be easily switched using the `OLED_HAL_PLATFORM` macro.
+ 
+```c
+// For AVR platform
+#define OLED_HAL_PLATFORM avr
+
+// For AVR0 platform
+#define OLED_HAL_PLATFORM avr0
+```
+
+### Folder structure setup:
+
+#### For AVR platform
+
+```
+- ./lib/ + oled.h
+         + oled.c
+         + hal/ + avr/ + twi/ + twi.h
+                       |      + twi.c
+                       + twi_soft/ + twi_soft.h
+                                   + twi_soft.c
+         ...  
+```
+
+#### For AVR0 platform
+
+```
+- ./lib/ + oled.h
+         + oled.c
+         + hal/ + avr0/ + twi/ + twi.h
+                        |      + twi.c
+                        + twi_soft/ + twi_soft.h
+                                    + twi_soft.c
+         ...  
+```
+
+> `Microchip Studio` compiles all libraries in the folders by default. Therefore, either `avr` or `avr0` should be created in the folder structure and the library that is not used should be removed. To select the correct platform and set the clock speed correctly in the libraries, it is best to create a `global define` under `Project-Settings -> AVR/GNU C-Compiler -> Symbols` in `Microchip studio`. 
+
+```c 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !! GLOBAL DEFINES FOR AVR0 PLATFORM                  !!
+// !! F_CPU=20000000UL                                  !!
+// !! OLED_HAL_PLATFORM=avr0                            !!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+```
 
 ## Communication mode of the display
 
