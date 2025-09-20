@@ -23,8 +23,8 @@ The hardware abstraction layer (`HAL`) of the OLED display currently supports th
 #### For AVR platform
 
 ```
-- ./lib/ + oled.h
-         + oled.c
+- ./lib/ + oled/ + oled.h
+         |       + oled.c
          + hal/ + avr/ + twi/ + twi.h
                        |      + twi.c
                        + twi_soft/ + twi_soft.h
@@ -35,8 +35,8 @@ The hardware abstraction layer (`HAL`) of the OLED display currently supports th
 #### For AVR0 platform
 
 ```
-- ./lib/ + oled.h
-         + oled.c
+- ./lib/ + oled/ + oled.h
+         |       + oled.c
          + hal/ + avr0/ + twi/ + twi.h
                         |      + twi.c
                         + twi_soft/ + twi_soft.h
