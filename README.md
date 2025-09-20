@@ -53,7 +53,7 @@ The `oled` library currently supports the `avr` and `avr0` plattform. The platfo
 #define OLED_HAL_PLATFORM avr0
 ```
 
-> Microchip Studio compiles all libraries in the folders by default. Therefore, either avr or avr0 should be created in the folder structure and the library that is not used should be removed. To select the correct platform and set the clock speed correctly in the libraries, it is best to create a global define in Microchip studio.
+> `Microchip Studio` compiles all libraries in the folders by default. Therefore, either `avr` or `avr0` should be created in the folder structure and the library that is not used should be removed. To select the correct platform and set the clock speed correctly in the libraries, it is best to create a `global define` under `Project-Settings -> AVR/GNU C-Compiler -> Symbols` in `Microchip studio`. 
 
 ```c 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
