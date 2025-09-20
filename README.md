@@ -47,7 +47,7 @@ The `oled` library currently supports the `avr` and `avr0` plattform. The platfo
 
 ```c
 // For AVR platform
-#define OLED_HAL_PTATFORM avr
+#define OLED_HAL_PLATFORM avr
 
 // For AVR0 platform
 #define OLED_HAL_PLATFORM avr0
