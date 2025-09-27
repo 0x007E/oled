@@ -35,7 +35,8 @@
  */
 unsigned char twi_init(void)
 {
-	PORTMUX.TWISPIROUTEA = TWI_PORTMUX;
+    PORTMUX.TWISPIROUTEA &= ~PORTMUX_TWI0_NONE_gc;
+	PORTMUX.TWISPIROUTEA |= TWI_PORTMUX;
 	
 	TWI0.MBAUD =  TWI_BITRATE;
 	TWI0.MCTRLA = TWI_ENABLE_bm
@@ -60,7 +61,7 @@ unsigned char twi_init(void)
 inline void twi_disable(void)
 {
     TWI0.MCTRLA = 0x00;
-    PORTMUX.TWISPIROUTEA = PORTMUX_TWI0_DEFAULT_gc;
+    PORTMUX.TWISPIROUTEA &= ~PORTMUX_TWI0_NONE_gc;
 }
 
 /**
