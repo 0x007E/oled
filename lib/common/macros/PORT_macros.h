@@ -5,8 +5,7 @@
  * 
  * This header file contains essential macros for handling port and pin names.
  * 
- * @note These macros serve to improve code clarity and maintain protocol compliance by providing meaningful names
- * for standard port operation indicators.
+ * @note These macros serve to improve code clarity and maintain protocol compliance by providing meaningful names for standard port operation indicators.
  * 
  * @author g.raf
  * @date 2025-09-14
@@ -17,7 +16,7 @@
  * 
  * @note This file is part of a larger project and subject to the license specified in the repository. For updates and the complete revision history, see the GitHub repository.
  * 
- * @see https://github.com/0x007e/avr-common  "AVR ATmega GitHub Repository"
+ * @see https://github.com/0x007e/avr-common  "AVR Common GitHub Repository"
  */
 
 #ifndef PORT_MACROS_H_
