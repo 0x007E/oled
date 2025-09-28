@@ -33,7 +33,7 @@
  * 1. Writing the selected system clock source (`SYSTEM_CLOCK`) to `CLKCTRL.MCLKCTRLA`.  
  * 2. Waiting until the new clock source is active and stable, by checking `CLKCTRL.MCLKSTATUS` against `SYSTEM_CLOCK_BIT`.  
  * 3. If `SYSTEM_PER_CLOCK_PRESCALER` is defined, configuring the peripheral clock division ratio via `CLKCTRL.MCLKCTRLB`.  
- * 4. If the selected system clock is the internal 20 MHz oscillator (`CLKCTRL_CLKSEL_OSC20M_gc`), enabling the oscillator in standby mode by setting `CLKCTRL.OSC20MCTRLA`.  
+ * 4. If the selected system clock is the internal 20?MHz oscillator (`CLKCTRL_CLKSEL_OSC20M_gc`), enabling the oscillator in standby mode by setting `CLKCTRL.OSC20MCTRLA`.  
  *
  * @note
  * - The function makes use of the **Configuration Change Protection** (CCP) mechanism (`CCP = CCP_IOREG_gc`) before writing to protected `CLKCTRL` registers.  
@@ -57,9 +57,13 @@ void system_init(void)
         CLKCTRL.MCLKCTRLB = SYSTEM_PER_CLOCK_PRESCALER | CLKCTRL_PEN_bm;
     #endif
     
+    CCP = CCP_IOREG_gc;
     #if SYSTEM_CLOCK == CLKCTRL_CLKSEL_OSC20M_gc
-        CCP = CCP_IOREG_gc;
         CLKCTRL.OSC20MCTRLA = CLKCTRL_RUNSTDBY_bm;
+    #elif SYSTEM_CLOCK == CLKCTRL_CLKSEL_OSCULP32K_gc
+        CLKCTRL.OSC32KCTRLA = CLKCTRL_RUNSTDBY_bm;
+    #else
+        #error "No system clock defined"
     #endif
 }
 

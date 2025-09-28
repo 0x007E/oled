@@ -40,22 +40,30 @@
 
     /**
      * @def SYSTEM_CLOCK_BIT
-     * @brief Defines the bit mask corresponding to the current system clock source.
+     * @brief Bit mask representing the current system clock source status.
      *
      * @details
-     * This macro provides the bit mask that represents the currently selected system clock source. It is typically used when checking or configuring oscillator status bits in the ``CLKCTRL`` registers.
+     * This macro defines the bit mask corresponding to the currently selected system clock source, used primarily for status checking and register configuration within the ``CLKCTRL`` peripheral.
      *
-     * Possible values (depending on SYSTEM_CLOCK):
-     * - `CLKCTRL_OSC20MS_bm` : Mask for the 20 MHz internal oscillator  
-     * - `CLKCTRL_OSC32KS_bm` : Mask for the 32 kHz internal oscillator  
-     * - `CLKCTRL_EXTS_bm`    : Mask for the external clock source  
+     * The value depends on the predefined `SYSTEM_CLOCK` macro:
+     * - For `CLKCTRL_CLKSEL_OSC20M_gc` (20 MHz internal oscillator), the mask is `CLKCTRL_OSC20MS_bm`.
+     * - For `CLKCTRL_CLKSEL_OSCULP32K_gc` (32 kHz ultra low power internal oscillator), the mask is `CLKCTRL_OSC32KS_bm`.
+     * - For `CLKCTRL_CLKSEL_EXTCLK_gc` (external clock source), the mask is `CLKCTRL_EXTS_bm`.
      *
-     * By default, `SYSTEM_CLOCK_BIT` is set to match `CLKCTRL_CLKSEL_OSC20M_gc` → `CLKCTRL_OSC20MS_bm`.
+     * By default, `SYSTEM_CLOCK_BIT` is automatically set to match the bit mask corresponding to the selected `SYSTEM_CLOCK`.
      *
-     * @note This macro complements `SYSTEM_CLOCK` by indicating the appropriate bit mask for low-level register operations.
+     * @note This macro is essential for low-level clock control and monitoring, ensuring that code correctly interacts with the hardware clock status registers.
+     *
+     * @see SYSTEM_CLOCK for the active clock source selection.
      */
     #ifndef SYSTEM_CLOCK_BIT
-        #define SYSTEM_CLOCK_BIT CLKCTRL_OSC20MS_bm
+        #if SYSTEM_CLOCK == CLKCTRL_CLKSEL_OSC20M_gc
+            #define SYSTEM_CLOCK_BIT CLKCTRL_OSC20MS_bm
+        #elif SYSTEM_CLOCK == CLKCTRL_CLKSEL_OSCULP32K_gc
+            #define SYSTEM_CLOCK_BIT CLKCTRL_OSC32KS_bm
+        #elif SYSTEM_CLOCK == CLKCTRL_CLKSEL_EXTCLK_gc
+            #define SYSTEM_CLOCK_BIT CLKCTRL_EXTS_bm
+        #endif
     #endif
 #endif
 
