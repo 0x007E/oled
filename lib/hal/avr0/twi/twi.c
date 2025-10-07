@@ -162,7 +162,7 @@ inline unsigned char twi_status(void)
         do
         {
 	        temp = twi_bus_state();
-        } while (twi_bus_state() == TWI_Run);
+        } while (temp == TWI_Run);
 
         return temp;
     }
@@ -193,7 +193,7 @@ inline unsigned char twi_status(void)
         do
         {
 	        temp = twi_bus_state();
-        } while (twi_bus_state() == TWI_Run);
+        } while (temp == TWI_Run);
 
         return temp;
     }
@@ -228,7 +228,7 @@ inline unsigned char twi_status(void)
         do
         {
 	        temp = twi_bus_state();
-        } while (twi_bus_state() == TWI_Run);
+        } while (temp == TWI_Run);
 
         if(temp == TWI_None)
         {
