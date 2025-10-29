@@ -2,6 +2,8 @@
 
 # OLED Display Library (SSD1306)
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/0x007E/oled)
+
 This project includes a easy to use OLED library for an `SSD1306`/`SH1106` that can be used with an `ATmega`- or `ATmega0`-Series controller. The library itself can be found in the [lib](./lib) directory and demo applications for `avr` are pushed to [demo](./demo) and for `avr0` to [demo-avr0](./demo-avr0) directory. A short description of how to use the library for `avr` platforms can be found below.
 
 ## Advanced guides
