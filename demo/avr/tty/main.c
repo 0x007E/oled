@@ -4,7 +4,17 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#include "../../lib/oled/tty/tty.h"
+#include "../../lib/drivers/display/ssd130x/tty/tty.h"
+
+void systick_timer_wait_us(unsigned int us)
+{
+	us = (((us - 2)>>1) + 1);
+
+	for(unsigned int i = 0; i < us; i++)
+	{
+    	_delay_us(1);
+	}
+}
 
 int main(void)
 {

@@ -1,0 +1,44 @@
+set(AVR_TARGET_NAME "tty_twi_m16a")
+set(AVR_LIB_ROOT "/lib/*.c")
+set(AVR_INCLUDES "/lib/")
+
+set(AVR_MCU "atmega16a")
+set(AVR_F_CPU "12000000UL")
+
+set(AVR_DFP_ROOT "${CMAKE_SOURCE_DIR}/DFP" CACHE STRING "Path to AVR DFP")
+set(AVR_DEFINES  ""                        CACHE STRING "Additional defines for the AVR compiler")
+
+avr_get_memory_sizes(${AVR_MCU} AVR_FLASH_BYTES AVR_RAM_BYTES AVR_EEPROM_BYTES)
+
+file(GLOB_RECURSE APP_SOURCES CONFIGURE_DEPENDS
+    ${CMAKE_CURRENT_LIST_DIR}/*.c
+    ${CMAKE_SOURCE_DIR}/${AVR_LIB_ROOT}
+)
+
+# build_avr_firmware(
+#     ${AVR_TARGET_NAME}
+#     MCU "${AVR_MCU}"
+#     F_CPU "${AVR_F_CPU}"
+#     OUTPUT_NAME "${AVR_TARGET_NAME}"
+#     DFP_ROOT "${AVR_DFP_ROOT}"
+#     SOURCES ${APP_SOURCES}
+#     INCLUDES ${CMAKE_SOURCE_DIR}${AVR_INCLUDES}
+#     COMPILE_OPTIONS -Os
+#     DEFINES DEBUG ${AVR_DEFINES}
+# )
+
+build_avr_firmware(
+    ${AVR_TARGET_NAME}
+    MCU "${AVR_MCU}"
+    F_CPU "${AVR_F_CPU}"
+    OUTPUT_NAME "${AVR_TARGET_NAME}"
+    DFP_ROOT "${AVR_DFP_ROOT}"
+    FLASH_BYTES "${AVR_FLASH_BYTES}"
+    RAM_BYTES "${AVR_RAM_BYTES}"
+    EEPROM_BYTES "${AVR_EEPROM_BYTES}"
+    SIZE_WRAPPER "${CMAKE_SOURCE_DIR}/cmake/platforms/avr/usage-avr-size.sh"
+    SOURCES ${APP_SOURCES}
+    INCLUDES ${CMAKE_SOURCE_DIR}${AVR_INCLUDES}
+    COMPILE_OPTIONS -Os
+    DEFINES DEBUG ${AVR_DEFINES}
+)

@@ -14,15 +14,25 @@
 #include <util/delay.h>
 
 #include "../../lib/hal/avr0/system/system.h"
-#include "../../lib/oled/frame/frame.h"
+#include "../../lib/drivers/display/ssd130x/frame/frame.h"
+
+void systick_timer_wait_us(unsigned int us)
+{
+	us = (((us - 2)>>1) + 1);
+
+	for(unsigned int i = 0; i < us; i++)
+	{
+    	_delay_us(1);
+	}
+}
 
 int main(void)
 {
     system_init();
     frame_init();
 
-    DRAWING_Position position = { 106, 2 };
-    DRAWING_Size size = { 10, 10 };
+    GFX_Point position = { 106, 2 };
+    GFX_Size size = { 10, 10 };
     
     frame_draw_text("Init", position);
     
@@ -30,14 +40,14 @@ int main(void)
     position.y = 35;
     
     unsigned int value = 1337;
-    frame_draw_number(&value, 4, NUMBER_Unsigned_Int, NUMBER_Decimal, position);
+    frame_draw_number(&value, 4, NUMERIC_Unsigned_Int, NUMERIC_Decimal, position);
     
     // Short version:
-    //frame_draw_number(&(unsigned int){16}, 4, NUMBER_Unsigned_Int, NUMBER_Decimal, position);
+    //frame_draw_number(&(unsigned int){16}, 4, NUMERIC_Unsigned_Int, NUMERIC_Decimal, position);
     
     position.x = 75;
     position.y = 35;
-    frame_draw_number_int(-116, 4, NUMBER_Decimal, position);
+    frame_draw_number_int(-116, 4, NUMERIC_Decimal, position);
     
     _delay_ms(2000);
     
@@ -59,7 +69,7 @@ int main(void)
         
         position.x = 2;
         position.y = 47;
-        frame_draw_number_uint(temp, 3, NUMBER_Decimal, position);
+        frame_draw_number_uint(temp, 3, NUMERIC_Decimal, position);
         
         _delay_ms(50);
     }
