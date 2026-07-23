@@ -339,7 +339,7 @@ jobs:
     env:
       DEVICE: "atmega4808"
       FIRMWARE_NAME: "tty_hw_twi_m4808"
-      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr;TWI_PORTMUX=PORTMUX_TWI0_ALT2_gc"
+      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;TWI_PORTMUX=PORTMUX_TWI0_ALT2_gc"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -405,7 +405,7 @@ jobs:
     env:
       DEVICE: "atmega4808"
       FIRMWARE_NAME: "frame_sw_twi_m4808"
-      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr;SSD130X_USE_SOFT_TWI"
+      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;SSD130X_USE_SOFT_TWI"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -417,7 +417,7 @@ jobs:
         git submodule update --remote --recursive
         git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr
         chmod 0777 ./${{ env.PROJECT_PATH }}/cmake/platforms/avr/usage-avr-size.sh
-        
+
     - name: Copy license
       run: |
         mkdir -p ./${{ env.OUTPUT_FOLDER }}
@@ -471,7 +471,7 @@ jobs:
     env:
       DEVICE: "atmega4808"
       FIRMWARE_NAME: "frame_hw_twi_m4808"
-      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr;TWI_PORTMUX=PORTMUX_TWI0_ALT2_gc"
+      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;TWI_PORTMUX=PORTMUX_TWI0_ALT2_gc"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -532,7 +532,7 @@ jobs:
         name: firmware-m4808-frame-hardware-twi
         path: ./${{ env.OUTPUT_FOLDER }}
         retention-days: 1
-        
+
   create-release:
     needs: [
       build-firmware-m16a-tty-software-twi,
