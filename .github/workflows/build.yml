@@ -42,19 +42,19 @@ jobs:
     
     - name: Install build tools
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
         tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
         unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
@@ -108,19 +108,19 @@ jobs:
     
     - name: Install build tools
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
         tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
         unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
@@ -174,19 +174,19 @@ jobs:
     
     - name: Install build tools
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
         tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
         unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
@@ -233,19 +233,19 @@ jobs:
     
     - name: Install build tools
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
         tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
         unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
@@ -299,24 +299,24 @@ jobs:
     
     - name: Install build tools
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
         tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
         unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
 
-        cmake --build build/ --target tty_twi_m16a -j
+        cmake --build build/ --target tty_twi_m4808 -j
 
     - name: Copy firmware to output folder
       run: |
@@ -365,24 +365,24 @@ jobs:
     
     - name: Install build tools
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
         tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
         unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
 
-        cmake --build build/ --target tty_twi_m16a -j
+        cmake --build build/ --target tty_twi_m4808 -j
 
     - name: Copy firmware to output folder
       run: |
@@ -431,24 +431,24 @@ jobs:
     
     - name: Install build tools
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
         tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
         unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
 
-        cmake --build build/ --target tty_twi_m16a -j
+        cmake --build build/ --target tty_twi_m4808 -j
 
     - name: Copy firmware to output folder
       run: |
@@ -497,24 +497,24 @@ jobs:
     
     - name: Install build tools
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
         tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
         unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
-        cd ${{ env.PROJECT_PATH }}
+        cd ./${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
 
-        cmake --build build/ --target tty_twi_m16a -j
+        cmake --build build/ --target tty_twi_m4808 -j
 
     - name: Copy firmware to output folder
       run: |
