@@ -29,27 +29,27 @@ jobs:
 
     - name: Copy license
       run: |
-          mkdir -p ${{ env.OUTPUT_FOLDER }}
-          cp ./LICENSE.md ${{ env.OUTPUT_FOLDER }}
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./LICENSE.md ./${{ env.OUTPUT_FOLDER }}
     
     - name: Install necessary packages
-      run: sudo apt-get install -y zip cmake
-
-    - name: Switch to project directory
-      run: cd ${{ env.PROJECT_PATH }}
+      run: sudo apt-get install -y zip unzip cmake
     
     - name: Install build tools
       run: |
-          wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
-          tar -xf *.tar.gz
+        cd ${{ env.PROJECT_PATH }}
+        wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
+        tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-          wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
-          unzip *.atpack -d ./DFP
+        cd ${{ env.PROJECT_PATH }}
+        wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
+        unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
+        cd ${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
@@ -58,25 +58,22 @@ jobs:
 
     - name: Copy firmware to output folder
       run: |
-        mkdir -p ${{ env.OUTPUT_FOLDER }}
-        cp build/*.hex ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
-        cp build/*.map ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
-        cp build/*.lss ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
-        cp build/*.eep ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
-
-    - name: Switch to base directory
-      run: cd ..
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./${{ env.PROJECT_PATH }}/build/*.hex ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
+        cp ./${{ env.PROJECT_PATH }}/build/*.map ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
+        cp ./${{ env.PROJECT_PATH }}/build/*.lss ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
+        cp ./${{ env.PROJECT_PATH }}/build/*.eep ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
     
     - name: Archive build artifacts
       run: |
-        tar -czvf build.tar.gz ${{ env.OUTPUT_FOLDER }}
-        zip -r build.zip ${{ env.OUTPUT_FOLDER }}
+        tar -czvf build.tar.gz ./${{ env.OUTPUT_FOLDER }}
+        zip -r build.zip ./${{ env.OUTPUT_FOLDER }}
 
     - name: Upload firmware artifacts
       uses: actions/upload-artifact@v7
       with:
         name: firmware-m16a-tty-software-twi
-        path: ${{ env.OUTPUT_FOLDER }}
+        path: ./${{ env.OUTPUT_FOLDER }}
         retention-days: 1
 
   build-firmware-m16a-tty-hardware-twi:
@@ -96,27 +93,27 @@ jobs:
 
     - name: Copy license
       run: |
-          mkdir -p ${{ env.OUTPUT_FOLDER }}
-          cp ./LICENSE.md ${{ env.OUTPUT_FOLDER }}
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./LICENSE.md ./${{ env.OUTPUT_FOLDER }}
     
     - name: Install necessary packages
-      run: sudo apt-get install -y zip cmake
-
-    - name: Switch to project directory
-      run: cd ${{ env.PROJECT_PATH }}
+      run: sudo apt-get install -y zip unzip cmake
     
     - name: Install build tools
       run: |
-          wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
-          tar -xf *.tar.gz
+        cd ${{ env.PROJECT_PATH }}
+        wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
+        tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-          wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
-          unzip *.atpack -d ./DFP
+        cd ${{ env.PROJECT_PATH }}
+        wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
+        unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
+        cd ${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
@@ -125,25 +122,22 @@ jobs:
 
     - name: Copy firmware to output folder
       run: |
-        mkdir -p ${{ env.OUTPUT_FOLDER }}
-        cp build/*.hex ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
-        cp build/*.map ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
-        cp build/*.lss ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
-        cp build/*.eep ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
-
-    - name: Switch to base directory
-      run: cd ..
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./${{ env.PROJECT_PATH }}/build/*.hex ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
+        cp ./${{ env.PROJECT_PATH }}/build/*.map ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
+        cp ./${{ env.PROJECT_PATH }}/build/*.lss ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
+        cp ./${{ env.PROJECT_PATH }}/build/*.eep ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
     
     - name: Archive build artifacts
       run: |
-        tar -czvf build.tar.gz ${{ env.OUTPUT_FOLDER }}
-        zip -r build.zip ${{ env.OUTPUT_FOLDER }}
+        tar -czvf build.tar.gz ./${{ env.OUTPUT_FOLDER }}
+        zip -r build.zip ./${{ env.OUTPUT_FOLDER }}
 
     - name: Upload firmware artifacts
       uses: actions/upload-artifact@v7
       with:
         name: firmware-m16a-tty-hardware-twi
-        path: ${{ env.OUTPUT_FOLDER }}
+        path: ./${{ env.OUTPUT_FOLDER }}
         retention-days: 1
 
   build-firmware-m16a-frame-software-twi:
@@ -163,55 +157,45 @@ jobs:
 
     - name: Copy license
       run: |
-          mkdir -p ${{ env.OUTPUT_FOLDER }}
-          cp ./LICENSE.md ${{ env.OUTPUT_FOLDER }}
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./LICENSE.md ./${{ env.OUTPUT_FOLDER }}
     
     - name: Install necessary packages
-      run: sudo apt-get install -y zip cmake
-
-    - name: Switch to project directory
-      run: cd ${{ env.PROJECT_PATH }}
+      run: sudo apt-get install -y zip unzip cmake
     
     - name: Install build tools
       run: |
-          wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
-          tar -xf *.tar.gz
+        cd ${{ env.PROJECT_PATH }}
+        wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
+        tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-          wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
-          unzip *.atpack -d ./DFP
+        cd ${{ env.PROJECT_PATH }}
+        wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
+        unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
+        cd ${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
 
-        cmake --build build/ --target frame_twi_m16a -j
+        cmake --build build/ --target tty_twi_m16a -j
 
     - name: Copy firmware to output folder
       run: |
-        mkdir -p ${{ env.OUTPUT_FOLDER }}
-        cp build/*.hex ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
-        cp build/*.map ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
-        cp build/*.lss ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
-        cp build/*.eep ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
-
-    - name: Switch to base directory
-      run: cd ..
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./${{ env.PROJECT_PATH }}/build/*.hex ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
+        cp ./${{ env.PROJECT_PATH }}/build/*.map ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
+        cp ./${{ env.PROJECT_PATH }}/build/*.lss ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
+        cp ./${{ env.PROJECT_PATH }}/build/*.eep ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
     
     - name: Archive build artifacts
       run: |
-        tar -czvf build.tar.gz ${{ env.OUTPUT_FOLDER }}
-        zip -r build.zip ${{ env.OUTPUT_FOLDER }}
-
-    - name: Upload firmware artifacts
-      uses: actions/upload-artifact@v7
-      with:
-        name: firmware-m16a-frame-software-twi
-        path: ${{ env.OUTPUT_FOLDER }}
-        retention-days: 1
+        tar -czvf build.tar.gz ./${{ env.OUTPUT_FOLDER }}
+        zip -r build.zip ./${{ env.OUTPUT_FOLDER }}
 
   build-firmware-m16a-frame-hardware-twi:
     env:
@@ -230,54 +214,51 @@ jobs:
 
     - name: Copy license
       run: |
-          mkdir -p ${{ env.OUTPUT_FOLDER }}
-          cp ./LICENSE.md ${{ env.OUTPUT_FOLDER }}
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./LICENSE.md ./${{ env.OUTPUT_FOLDER }}
     
     - name: Install necessary packages
-      run: sudo apt-get install -y zip cmake
-
-    - name: Switch to project directory
-      run: cd ${{ env.PROJECT_PATH }}
+      run: sudo apt-get install -y zip unzip cmake
     
     - name: Install build tools
       run: |
-          wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
-          tar -xf *.tar.gz
+        cd ${{ env.PROJECT_PATH }}
+        wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
+        tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-          wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
-          unzip *.atpack -d ./DFP
+        cd ${{ env.PROJECT_PATH }}
+        wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
+        unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
+        cd ${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
 
-        cmake --build build/ --target frame_twi_m16a -j
+        cmake --build build/ --target tty_twi_m16a -j
 
     - name: Copy firmware to output folder
       run: |
-        mkdir -p ${{ env.OUTPUT_FOLDER }}
-        cp build/*.hex ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
-        cp build/*.map ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
-        cp build/*.lss ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
-        cp build/*.eep ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
-
-    - name: Switch to base directory
-      run: cd ..
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./${{ env.PROJECT_PATH }}/build/*.hex ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
+        cp ./${{ env.PROJECT_PATH }}/build/*.map ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
+        cp ./${{ env.PROJECT_PATH }}/build/*.lss ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
+        cp ./${{ env.PROJECT_PATH }}/build/*.eep ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
     
     - name: Archive build artifacts
       run: |
-        tar -czvf build.tar.gz ${{ env.OUTPUT_FOLDER }}
-        zip -r build.zip ${{ env.OUTPUT_FOLDER }}
+        tar -czvf build.tar.gz ./${{ env.OUTPUT_FOLDER }}
+        zip -r build.zip ./${{ env.OUTPUT_FOLDER }}
 
     - name: Upload firmware artifacts
       uses: actions/upload-artifact@v7
       with:
         name: firmware-m16a-frame-hardware-twi
-        path: ${{ env.OUTPUT_FOLDER }}
+        path: ./${{ env.OUTPUT_FOLDER }}
         retention-days: 1
 
   build-firmware-m4808-tty-software-twi:
@@ -297,61 +278,58 @@ jobs:
 
     - name: Copy license
       run: |
-          mkdir -p ${{ env.OUTPUT_FOLDER }}
-          cp ./LICENSE.md ${{ env.OUTPUT_FOLDER }}
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./LICENSE.md ./${{ env.OUTPUT_FOLDER }}
     
     - name: Install necessary packages
-      run: sudo apt-get install -y zip cmake
-
-    - name: Switch to project directory
-      run: cd ${{ env.PROJECT_PATH }}
+      run: sudo apt-get install -y zip unzip cmake
     
     - name: Install build tools
       run: |
-          wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
-          tar -xf *.tar.gz
+        cd ${{ env.PROJECT_PATH }}
+        wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
+        tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-          wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
-          unzip *.atpack -d ./DFP
+        cd ${{ env.PROJECT_PATH }}
+        wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
+        unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
+        cd ${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
 
-        cmake --build build/ --target tty_twi_m4808 -j
+        cmake --build build/ --target tty_twi_m16a -j
 
     - name: Copy firmware to output folder
       run: |
-        mkdir -p ${{ env.OUTPUT_FOLDER }}
-        cp build/*.hex ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
-        cp build/*.map ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
-        cp build/*.lss ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
-        cp build/*.eep ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
-
-    - name: Switch to base directory
-      run: cd ..
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./${{ env.PROJECT_PATH }}/build/*.hex ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
+        cp ./${{ env.PROJECT_PATH }}/build/*.map ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
+        cp ./${{ env.PROJECT_PATH }}/build/*.lss ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
+        cp ./${{ env.PROJECT_PATH }}/build/*.eep ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
     
     - name: Archive build artifacts
       run: |
-        tar -czvf build.tar.gz ${{ env.OUTPUT_FOLDER }}
-        zip -r build.zip ${{ env.OUTPUT_FOLDER }}
+        tar -czvf build.tar.gz ./${{ env.OUTPUT_FOLDER }}
+        zip -r build.zip ./${{ env.OUTPUT_FOLDER }}
 
     - name: Upload firmware artifacts
       uses: actions/upload-artifact@v7
       with:
         name: firmware-m4808-tty-software-twi
-        path: ${{ env.OUTPUT_FOLDER }}
+        path: ./${{ env.OUTPUT_FOLDER }}
         retention-days: 1
 
   build-firmware-m4808-tty-hardware-twi:
     env:
       DEVICE: "atmega4808"
       FIRMWARE_NAME: "tty_hw_twi_m4808"
-      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;TWI_PORTMUX=PORTMUX_TWI0_ALT2_gc"
+      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr;TWI_PORTMUX=PORTMUX_TWI0_ALT2_gc"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -364,61 +342,58 @@ jobs:
 
     - name: Copy license
       run: |
-          mkdir -p ${{ env.OUTPUT_FOLDER }}
-          cp ./LICENSE.md ${{ env.OUTPUT_FOLDER }}
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./LICENSE.md ./${{ env.OUTPUT_FOLDER }}
     
     - name: Install necessary packages
-      run: sudo apt-get install -y zip cmake
-
-    - name: Switch to project directory
-      run: cd ${{ env.PROJECT_PATH }}
+      run: sudo apt-get install -y zip unzip cmake
     
     - name: Install build tools
       run: |
-          wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
-          tar -xf *.tar.gz
+        cd ${{ env.PROJECT_PATH }}
+        wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
+        tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-          wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
-          unzip *.atpack -d ./DFP
+        cd ${{ env.PROJECT_PATH }}
+        wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
+        unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
+        cd ${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
 
-        cmake --build build/ --target tty_twi_m4808 -j
+        cmake --build build/ --target tty_twi_m16a -j
 
     - name: Copy firmware to output folder
       run: |
-        mkdir -p ${{ env.OUTPUT_FOLDER }}
-        cp build/*.hex ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
-        cp build/*.map ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
-        cp build/*.lss ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
-        cp build/*.eep ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
-
-    - name: Switch to base directory
-      run: cd ..
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./${{ env.PROJECT_PATH }}/build/*.hex ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
+        cp ./${{ env.PROJECT_PATH }}/build/*.map ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
+        cp ./${{ env.PROJECT_PATH }}/build/*.lss ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
+        cp ./${{ env.PROJECT_PATH }}/build/*.eep ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
     
     - name: Archive build artifacts
       run: |
-        tar -czvf build.tar.gz ${{ env.OUTPUT_FOLDER }}
-        zip -r build.zip ${{ env.OUTPUT_FOLDER }}
+        tar -czvf build.tar.gz ./${{ env.OUTPUT_FOLDER }}
+        zip -r build.zip ./${{ env.OUTPUT_FOLDER }}
 
     - name: Upload firmware artifacts
       uses: actions/upload-artifact@v7
       with:
         name: firmware-m4808-tty-hardware-twi
-        path: ${{ env.OUTPUT_FOLDER }}
+        path: ./${{ env.OUTPUT_FOLDER }}
         retention-days: 1
 
   build-firmware-m4808-frame-software-twi:
     env:
       DEVICE: "atmega4808"
       FIRMWARE_NAME: "frame_sw_twi_m4808"
-      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;SSD130X_USE_SOFT_TWI"
+      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr;SSD130X_USE_SOFT_TWI"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -431,61 +406,58 @@ jobs:
 
     - name: Copy license
       run: |
-          mkdir -p ${{ env.OUTPUT_FOLDER }}
-          cp ./LICENSE.md ${{ env.OUTPUT_FOLDER }}
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./LICENSE.md ./${{ env.OUTPUT_FOLDER }}
     
     - name: Install necessary packages
-      run: sudo apt-get install -y zip cmake
-
-    - name: Switch to project directory
-      run: cd ${{ env.PROJECT_PATH }}
+      run: sudo apt-get install -y zip unzip cmake
     
     - name: Install build tools
       run: |
-          wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
-          tar -xf *.tar.gz
+        cd ${{ env.PROJECT_PATH }}
+        wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
+        tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-          wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
-          unzip *.atpack -d ./DFP
+        cd ${{ env.PROJECT_PATH }}
+        wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
+        unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
+        cd ${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
 
-        cmake --build build/ --target frame_twi_m4808 -j
+        cmake --build build/ --target tty_twi_m16a -j
 
     - name: Copy firmware to output folder
       run: |
-        mkdir -p ${{ env.OUTPUT_FOLDER }}
-        cp build/*.hex ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
-        cp build/*.map ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
-        cp build/*.lss ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
-        cp build/*.eep ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
-
-    - name: Switch to base directory
-      run: cd ..
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./${{ env.PROJECT_PATH }}/build/*.hex ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
+        cp ./${{ env.PROJECT_PATH }}/build/*.map ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
+        cp ./${{ env.PROJECT_PATH }}/build/*.lss ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
+        cp ./${{ env.PROJECT_PATH }}/build/*.eep ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
     
     - name: Archive build artifacts
       run: |
-        tar -czvf build.tar.gz ${{ env.OUTPUT_FOLDER }}
-        zip -r build.zip ${{ env.OUTPUT_FOLDER }}
+        tar -czvf build.tar.gz ./${{ env.OUTPUT_FOLDER }}
+        zip -r build.zip ./${{ env.OUTPUT_FOLDER }}
 
     - name: Upload firmware artifacts
       uses: actions/upload-artifact@v7
       with:
         name: firmware-m4808-frame-software-twi
-        path: ${{ env.OUTPUT_FOLDER }}
+        path: ./${{ env.OUTPUT_FOLDER }}
         retention-days: 1
 
   build-firmware-m4808-frame-hardware-twi:
     env:
       DEVICE: "atmega4808"
       FIRMWARE_NAME: "frame_hw_twi_m4808"
-      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;TWI_PORTMUX=PORTMUX_TWI0_ALT2_gc"
+      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr;TWI_PORTMUX=PORTMUX_TWI0_ALT2_gc"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -498,56 +470,53 @@ jobs:
 
     - name: Copy license
       run: |
-          mkdir -p ${{ env.OUTPUT_FOLDER }}
-          cp ./LICENSE.md ${{ env.OUTPUT_FOLDER }}
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./LICENSE.md ./${{ env.OUTPUT_FOLDER }}
     
     - name: Install necessary packages
-      run: sudo apt-get install -y zip cmake
-
-    - name: Switch to project directory
-      run: cd ${{ env.PROJECT_PATH }}
+      run: sudo apt-get install -y zip unzip cmake
     
     - name: Install build tools
       run: |
-          wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
-          tar -xf *.tar.gz
+        cd ${{ env.PROJECT_PATH }}
+        wget https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-${{ env.TOOLCHAIN }}-linux.any.x86_64.tar.gz
+        tar -xf *.tar.gz
     
     - name: Install DFP package
       run: |
-          wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
-          unzip *.atpack -d ./DFP
+        cd ${{ env.PROJECT_PATH }}
+        wget https://packs.download.microchip.com/Microchip.${{ env.DFP }}.atpack
+        unzip *.atpack -d ./DFP
     
     - name: Build firmware
       run: |
+        cd ${{ env.PROJECT_PATH }}
         cmake -S . -B build \
           -DCMAKE_TOOLCHAIN_FILE=cmake/platforms/avr/toolchain-avr-gcc.cmake \
           -DAVR_DEFINES:STRING="${{ env.PREPROCESSOR }}"
 
-        cmake --build build/ --target frame_twi_m4808 -j
+        cmake --build build/ --target tty_twi_m16a -j
 
     - name: Copy firmware to output folder
       run: |
-        mkdir -p ${{ env.OUTPUT_FOLDER }}
-        cp build/*.hex ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
-        cp build/*.map ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
-        cp build/*.lss ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
-        cp build/*.eep ../${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
-
-    - name: Switch to base directory
-      run: cd ..
+        mkdir -p ./${{ env.OUTPUT_FOLDER }}
+        cp ./${{ env.PROJECT_PATH }}/build/*.hex ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.hex
+        cp ./${{ env.PROJECT_PATH }}/build/*.map ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.map
+        cp ./${{ env.PROJECT_PATH }}/build/*.lss ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.lss
+        cp ./${{ env.PROJECT_PATH }}/build/*.eep ./${{ env.OUTPUT_FOLDER }}/${{ env.FIRMWARE_NAME }}.eep
     
     - name: Archive build artifacts
       run: |
-        tar -czvf build.tar.gz ${{ env.OUTPUT_FOLDER }}
-        zip -r build.zip ${{ env.OUTPUT_FOLDER }}
+        tar -czvf build.tar.gz ./${{ env.OUTPUT_FOLDER }}
+        zip -r build.zip ./${{ env.OUTPUT_FOLDER }}
 
     - name: Upload firmware artifacts
       uses: actions/upload-artifact@v7
       with:
         name: firmware-m4808-frame-hardware-twi
-        path: ${{ env.OUTPUT_FOLDER }}
+        path: ./${{ env.OUTPUT_FOLDER }}
         retention-days: 1
-  
+        
   create-release:
     needs: [
       build-firmware-m16a-tty-software-twi,
