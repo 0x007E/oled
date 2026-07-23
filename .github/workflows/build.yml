@@ -30,6 +30,7 @@ jobs:
         git submodule update --init --recursive
         git submodule update --remote --recursive
         git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr0
+        chmod 0777 ./${{ env.PROJECT_PATH }}/cmake/platforms/avr/usage-avr-size.sh
 
     - name: Copy license
       run: |
@@ -95,6 +96,7 @@ jobs:
         git submodule update --init --recursive
         git submodule update --remote --recursive
         git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr0
+        chmod 0777 ./${{ env.PROJECT_PATH }}/cmake/platforms/avr/usage-avr-size.sh
 
     - name: Copy license
       run: |
@@ -160,6 +162,7 @@ jobs:
         git submodule update --init --recursive
         git submodule update --remote --recursive
         git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr0
+        chmod 0777 ./${{ env.PROJECT_PATH }}/cmake/platforms/avr/usage-avr-size.sh
 
     - name: Copy license
       run: |
@@ -218,6 +221,7 @@ jobs:
         git submodule update --init --recursive
         git submodule update --remote --recursive
         git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr0
+        chmod 0777 ./${{ env.PROJECT_PATH }}/cmake/platforms/avr/usage-avr-size.sh
 
     - name: Copy license
       run: |
@@ -283,6 +287,7 @@ jobs:
         git submodule update --init --recursive
         git submodule update --remote --recursive
         git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr
+        chmod 0777 ./${{ env.PROJECT_PATH }}/cmake/platforms/avr/usage-avr-size.sh
 
     - name: Copy license
       run: |
@@ -348,6 +353,7 @@ jobs:
         git submodule update --init --recursive
         git submodule update --remote --recursive
         git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr
+        chmod 0777 ./${{ env.PROJECT_PATH }}/cmake/platforms/avr/usage-avr-size.sh
 
     - name: Copy license
       run: |
@@ -413,7 +419,8 @@ jobs:
         git submodule update --init --recursive
         git submodule update --remote --recursive
         git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr
-
+        chmod 0777 ./${{ env.PROJECT_PATH }}/cmake/platforms/avr/usage-avr-size.sh
+        
     - name: Copy license
       run: |
         mkdir -p ./${{ env.OUTPUT_FOLDER }}
@@ -478,6 +485,7 @@ jobs:
         git submodule update --init --recursive
         git submodule update --remote --recursive
         git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr
+        chmod 0777 ./${{ env.PROJECT_PATH }}/cmake/platforms/avr/usage-avr-size.sh
 
     - name: Copy license
       run: |
