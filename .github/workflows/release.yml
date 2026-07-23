@@ -26,6 +26,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr0
 
     - name: Copy license
       run: |
@@ -90,6 +91,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr0
 
     - name: Copy license
       run: |
@@ -154,6 +156,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr0
 
     - name: Copy license
       run: |
@@ -211,6 +214,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr0
 
     - name: Copy license
       run: |
@@ -275,6 +279,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr
 
     - name: Copy license
       run: |
@@ -339,6 +344,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr
 
     - name: Copy license
       run: |
@@ -403,6 +409,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr
 
     - name: Copy license
       run: |
@@ -467,6 +474,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr
 
     - name: Copy license
       run: |
@@ -516,7 +524,7 @@ jobs:
         name: firmware-m4808-frame-hardware-twi
         path: ./${{ env.OUTPUT_FOLDER }}
         retention-days: 1
-        
+
   create-release:
     needs: [
       build-firmware-m16a-tty-software-twi,

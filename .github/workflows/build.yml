@@ -29,6 +29,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr0
 
     - name: Copy license
       run: |
@@ -93,6 +94,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr0
 
     - name: Copy license
       run: |
@@ -157,6 +159,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr0
 
     - name: Copy license
       run: |
@@ -214,6 +217,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr0
 
     - name: Copy license
       run: |
@@ -278,6 +282,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr
 
     - name: Copy license
       run: |
@@ -342,6 +347,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr
 
     - name: Copy license
       run: |
@@ -406,6 +412,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr
 
     - name: Copy license
       run: |
@@ -470,6 +477,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         git submodule update --remote --recursive
+        git rm -rf ./${{ env.PROJECT_PATH }}/lib/hal/avr
 
     - name: Copy license
       run: |
