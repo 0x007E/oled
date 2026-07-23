@@ -1,0 +1,42 @@
+[submodule "demo/cmake/platforms"]
+	path = demo/cmake/platforms
+	url = https://github.com/0x007E/cmake-mbed-platform.git
+[submodule "demo/lib/hal/avr/twi"]
+	path = demo/lib/hal/avr/twi
+	url = https://github.com/0x007E/hal-avr-mega-twi.git
+[submodule "demo/lib/hal/avr/twi_soft"]
+	path = demo/lib/hal/avr/twi_soft
+	url = https://github.com/0x007E/hal-avr-twi_soft.git
+[submodule "demo/lib/hal/avr0/twi"]
+	path = demo/lib/hal/avr0/twi
+	url = https://github.com/0x007E/hal-avr0-twi.git
+[submodule "demo/lib/hal/avr0/twi_soft"]
+	path = demo/lib/hal/avr0/twi_soft
+	url = https://github.com/0x007E/hal-avr0-twi_soft.git
+[submodule "demo/lib/hal/avr0/system"]
+	path = demo/lib/hal/avr0/system
+	url = https://github.com/0x007E/hal-avr0-system.git
+[submodule "demo/lib/core_types/numeric"]
+	path = demo/lib/core_types/numeric
+	url = https://github.com/0x007E/core_types-numeric.git
+[submodule "demo/lib/core_types/gfx"]
+	path = demo/lib/core_types/gfx
+	url = https://github.com/0x007E/core_types-gfx.git
+[submodule "demo/lib/hal/common"]
+	path = demo/lib/hal/common
+	url = https://github.com/0x007E/hal-common.git
+[submodule "demo/lib/utils/macros"]
+	path = demo/lib/utils/macros
+	url = https://github.com/0x007E/utils-macros.git
+[submodule "demo/lib/drivers/display/font"]
+	path = demo/lib/drivers/display/font
+	url = https://github.com/0x007E/drivers-display-font.git
+[submodule "demo/lib/drivers/display/ssd130x"]
+	path = demo/lib/drivers/display/ssd130x
+	url = https://github.com/0x007E/drivers-display-ssd130x.git
+[submodule "demo/lib/utils/systick"]
+	path = demo/lib/utils/systick
+	url = https://github.com/0x007E/utils-systick.git
+[submodule "demo/cmake/platform"]
+	path = demo/cmake/platform
+	url = https://github.com/0x007E/cmake-mbed-platform.git
