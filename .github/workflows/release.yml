@@ -203,6 +203,13 @@ jobs:
         tar -czvf build.tar.gz ./${{ env.OUTPUT_FOLDER }}
         zip -r build.zip ./${{ env.OUTPUT_FOLDER }}
 
+    - name: Upload firmware artifacts
+      uses: actions/upload-artifact@v7
+      with:
+        name: firmware-m16a-frame-hardware-twi
+        path: ./${{ env.OUTPUT_FOLDER }}
+        retention-days: 1
+
   build-firmware-m16a-frame-hardware-twi:
     env:
       DEVICE: "atmega16a"
