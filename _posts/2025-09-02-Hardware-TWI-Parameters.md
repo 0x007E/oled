@@ -3,11 +3,12 @@ layout: post
 title: twi.h - Hardware TWI parameter definition
 categories: [Parameters]
 introduction: "Descriptions of parameters that can be adapted in the twi header"
+modified_date: 2026-07-09 13:37:37 +0200
 ---
 
-Hardware abstraction layer (`HAL`) for communicating over `TWI/I2C` with the display. Basic settings like the speed of the bus can be defined in `twi.h`. 
+Hardware abstraction layer (`HAL`) for communicating over `TWI/I2C` with the oled display (`SSD130X`). Basic settings like the speed of the bus can be defined in `twi.h`. 
 
-> Hardware-defined TWI makes communication inflexible with regard to ports, as these cannot be switched.
+> Hardware-defined TWI makes communication inflexible with regard to pins, as these cannot be switched or only muxed to some specific positions.
 
 ## TWI-Bus speed definition
 
@@ -33,4 +34,4 @@ Calculation of the bitrate register (allowed values: `1-255`):
 
 ---
 
-For a more detailed view of the possible parameters that can be set in `twi.h`, take a look at the [OLED Doxygen documentation (`OLDD`)](https://0x007e.github.io/oled/doxygen/twi_8h.html).
+For a more detailed view of the possible parameters that can be set in `twi.h`, take a look at the `TWI` [documentation](https://0x007e.github.io/hal-avr-mega-twi/twi_8h.html).
