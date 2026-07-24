@@ -19,7 +19,7 @@ jobs:
     env:
       DEVICE: "atmega16a"
       FIRMWARE_NAME: "tty_sw_twi_m16a"
-      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr;SSD130X_USE_SOFT_TWI"
+      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr;SSD130X_USE_SOFT_TWI;FONT_STORE_IN_PROGMEM"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -85,7 +85,7 @@ jobs:
     env:
       DEVICE: "atmega16a"
       FIRMWARE_NAME: "tty_hw_twi_m16a"
-      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr"
+      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr;FONT_STORE_IN_PROGMEM"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -151,7 +151,7 @@ jobs:
     env:
       DEVICE: "atmega16a"
       FIRMWARE_NAME: "frame_sw_twi_m16a"
-      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr;SSD130X_USE_SOFT_TWI"
+      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr;SSD130X_USE_SOFT_TWI;FONT_STORE_IN_PROGMEM"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -217,7 +217,7 @@ jobs:
     env:
       DEVICE: "atmega16a"
       FIRMWARE_NAME: "frame_hw_twi_m16a"
-      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr"
+      PREPROCESSOR: "F_CPU=12000000UL;SSD130X_HAL_PLATFORM=avr;FONT_STORE_IN_PROGMEM"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -283,7 +283,7 @@ jobs:
     env:
       DEVICE: "atmega4808"
       FIRMWARE_NAME: "tty_sw_twi_m4808"
-      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;SSD130X_USE_SOFT_TWI"
+      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;SSD130X_USE_SOFT_TWI;FONT_STORE_IN_PROGMEM"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -349,7 +349,7 @@ jobs:
     env:
       DEVICE: "atmega4808"
       FIRMWARE_NAME: "tty_hw_twi_m4808"
-      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;TWI_PORTMUX=PORTMUX_TWI0_ALT2_gc"
+      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;TWI_PORTMUX=PORTMUX_TWI0_ALT2_gc;FONT_STORE_IN_PROGMEM"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -415,7 +415,7 @@ jobs:
     env:
       DEVICE: "atmega4808"
       FIRMWARE_NAME: "frame_sw_twi_m4808"
-      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;SSD130X_USE_SOFT_TWI"
+      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;SSD130X_USE_SOFT_TWI;FONT_STORE_IN_PROGMEM"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -481,7 +481,7 @@ jobs:
     env:
       DEVICE: "atmega4808"
       FIRMWARE_NAME: "frame_hw_twi_m4808"
-      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;TWI_PORTMUX=PORTMUX_TWI0_ALT2_gc"
+      PREPROCESSOR: "F_CPU=20000000UL;SSD130X_HAL_PLATFORM=avr0;TWI_PORTMUX=PORTMUX_TWI0_ALT2_gc;FONT_STORE_IN_PROGMEM"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
