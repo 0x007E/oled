@@ -3,11 +3,12 @@ layout: post
 title: twi_soft.h - Software TWI parameter definition
 categories: [Parameters]
 introduction: "Descriptions of parameters that can be adapted in the twi_soft header"
+modified_date: 2026-07-05 13:37:37 +0200
 ---
 
-Hardware abstraction layer (`HAL`) for communicating over `TWI/I2C` with the display. Basic settings like the speed of the bus and pins can be defined in `twi_soft.h`. 
+Hardware abstraction layer (`HAL`) for communicating over `TWI/I2C` with the oled display (`SSD130X`). Basic settings like the speed of the bus and pins can be defined in `twi_soft.h`. 
 
-> Software-defined TWI makes communication more flexible because the ports can be switched.
+> Software-defined TWI makes communication more flexible because the pins can be switched.
 
 ## TWI-Bus speed definition
 
@@ -54,4 +55,4 @@ If a transmission should not be interrupted, the software TWI library can be sto
 
 ---
 
-For a more detailed view of the possible parameters that can be set in `twi_soft.h`, take a look at the [OLED Doxygen documentation (`OLDD`)](https://0x007e.github.io/oled/doxygen/twi__soft_8h.html).
+For a more detailed view of the possible parameters that can be set in `twi_soft.h`, take a look at the software-`TWI` [documentation](https://0x007e.github.io/hal-avr-twi_soft/twi__soft_8h.html).
