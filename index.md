@@ -11,7 +11,8 @@ In the section below there are differnt notes about how to use the library.
 ### Quicklinks:
 
 - [OLED Graphics Designer `OLGD`](https://0x007e.github.io/oled-designer/)
-- [OLED Doxygen Documentation `OLDD`](https://0x007e.github.io/oled/doxygen/)
-- [OLED GitHub Library `OLGL`](https://github.com/0x007e/oled/)
+- [OLED Usage Demonstration `OLUD`](https://github.com/0x007e/oled/)
+- [SSD130X Doxygen Documentation `SDDD`](https://0x007e.github.io/drivers-display-ssd130x/)
+- [SSD130X Driver Library `SDDL`](https://github.com/0x007e/drivers-display-ssd130x/)
 
 ---
