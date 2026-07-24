@@ -3,6 +3,7 @@ layout: post
 title: tty.h - TTY parameter definition
 categories: [Parameters]
 introduction: "Descriptions of parameters that can be adapted in the tty header"
+modified_date: 2026-07-18 13:37:37 +0200
 ---
 
 The TTY is a console (terminal) that renders lines of text using a font and outputs text in different modes.
@@ -50,4 +51,4 @@ Sometimes it's necessary to save some space. Therefore, it's possible to disable
 
 ---
 
-For a more detailed view of the possible parameters that can be set in `tty.h`, take a look at the [OLED Doxygen documentation (`OLDD`)](https://0x007e.github.io/oled/doxygen/tty_8h.html).
+For a more detailed view of the possible parameters that can be set in `tty.h`, take a look at the `SSD130X` [documentation](https://0x007e.github.io/drivers-display-ssd130x/frame_8h.html).
