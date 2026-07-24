@@ -3,6 +3,7 @@ layout: post
 title: font.h - FONT parameter definition
 categories: [Parameters]
 introduction: "Descriptions of parameters that can be adapted in the font header"
+modified_date: 2026-07-12 13:37:37 +0200
 ---
 
 The font header `font.h` defines parameters to setup the size of a character/number or symbol, if only uppercase letters should be used and where font data should be stored.
@@ -50,4 +51,4 @@ It is possible to move the font data from programm memory to eeprom. This can be
 
 ---
 
-For a more detailed view of the possible parameters that can be set in `font.h`, take a look at the [OLED Doxygen documentation (`OLDD`)](https://0x007e.github.io/oled/doxygen/font_8h.html).
+For a more detailed view of the possible parameters that can be set in `font.h`, take a look at the `FONT` [documentation](https://0x007e.github.io/drivers-display-font/font_8h.html).
