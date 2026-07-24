@@ -3,6 +3,7 @@ layout: post
 title: frame.h - FRAME parameter definition
 categories: [Parameters]
 introduction: "Descriptions of parameters that can be adapted in the frame header"
+modified_date: 2026-07-15 13:37:37 +0200
 ---
 
 The FRAME `frame.h` library renders pixel per page. It is possible to draw text/numbers or a bargraphs onto the display.
@@ -60,4 +61,4 @@ If floating-point numbers are enabled (`FRAME_NUMBER_ENABLE_FLOATING_POINT`) it 
 
 ---
 
-For a more detailed view of the possible parameters that can be set in `frame.h`, take a look at the [OLED Doxygen documentation (`OLDD`)](https://0x007e.github.io/oled/doxygen/frame_8h.html).
+For a more detailed view of the possible parameters that can be set in `frame.h`, take a look at the `SSD130X` [documentation](https://0x007e.github.io/drivers-display-ssd130x/frame_8h.html).
