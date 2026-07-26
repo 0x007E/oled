@@ -31,47 +31,51 @@ int main(void)
     system_init();
     frame_init();
 
-    GFX_Point position = { 106, 2 };
-    GFX_Size size = { 10, 10 };
-    
-    frame_draw_text("Init", position);
-    
-    position.x = 100;
-    position.y = 35;
-    
-    unsigned int value = 1337;
-    frame_draw_number(&value, 4, NUMERIC_Unsigned_Int, NUMERIC_Decimal, position);
-    
-    // Short version:
-    //frame_draw_number(&(unsigned int){16}, 4, NUMERIC_Unsigned_Int, NUMERIC_Decimal, position);
-    
-    position.x = 75;
-    position.y = 35;
-    frame_draw_number_int(-116, 4, NUMERIC_Decimal, position);
-    
-    _delay_ms(2000);
-    
-    unsigned char temp = 0;
-    
-    while (1)
-    {
-        position.x = 1;
-        position.y = 56;
-        size.width = 126;
-        size.height = 6;
-        
-        frame_draw_bar(position, size, temp++);
-        
-        if(temp >= 100UL)
-        {
-            temp = 0;
-        }
-        
-        position.x = 2;
-        position.y = 47;
-        frame_draw_number_uint(temp, 3, NUMERIC_Decimal, position);
-        
-        _delay_ms(50);
-    }
+    GFX_Point position = { 107, 2 };
+	GFX_Size size = { 10, 10 };
+	
+	frame_draw_text("Init", position);
+	
+	position.x = 100;
+	position.y = 36;
+	
+	// Short version:
+	//position = (GFX_Point){ 100, 35 };
+	//position = (GFX_Point){ .x = 100, .y = 35 };
+	
+	unsigned int value = 1337;
+	frame_draw_number(&value, 4, NUMERIC_Unsigned_Int, NUMERIC_Decimal, position);
+	
+	// Short version:
+	//frame_draw_number(&(unsigned int){16}, 4, NUMERIC_Unsigned_Int, NUMERIC_Decimal, position);
+	
+	position.x = 75;
+	position.y = 36;
+	frame_draw_number_int(-116, 4, NUMERIC_Decimal, position);
+	
+	_delay_ms(2000);
+	
+	unsigned char temp = 0;
+	
+	while (1)
+	{
+		position.x = 1;
+		position.y = 56;
+		size.width = 126;
+		size.height = 6;
+		
+		frame_draw_bar(position, size, temp++);
+		
+		if(temp >= 100UL)
+		{
+			temp = 0;
+		}
+		
+		position.x = 2;
+		position.y = 47;
+		frame_draw_number_uint(temp, 3, NUMERIC_Decimal, position);
+		
+		_delay_ms(50);
+	}
 }
 
