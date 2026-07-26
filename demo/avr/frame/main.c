@@ -20,13 +20,13 @@ int main(void)
 {
 	frame_init();
 
-	GFX_Point position = { 106, 2 };
+	GFX_Point position = { 106, 3 };
 	GFX_Size size = { 10, 10 };
 	
 	frame_draw_text("Init", position);
 	
 	position.x = 100;
-	position.y = 35;
+	position.y = 36;
 	
 	// Short version:
 	//position = (GFX_Point){ 100, 35 };
@@ -39,7 +39,7 @@ int main(void)
 	//frame_draw_number(&(unsigned int){16}, 4, NUMERIC_Unsigned_Int, NUMERIC_Decimal, position);
 	
 	position.x = 75;
-	position.y = 35;
+	position.y = 36;
 	frame_draw_number_int(-116, 4, NUMERIC_Decimal, position);
 	
 	_delay_ms(2000);
@@ -61,7 +61,7 @@ int main(void)
 		}
 		
 		position.x = 2;
-		position.y = 47;
+		position.y = 48;
 		frame_draw_number_uint(temp, 3, NUMERIC_Decimal, position);
 		
 		_delay_ms(50);
