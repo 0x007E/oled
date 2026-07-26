@@ -8,8 +8,8 @@ on:
 env:
   TOOLCHAIN: "4.0.0.52"
   DFP: "ATmega_DFP.3.6.299"
-  PROJECT_PATH: "./demo"
-  OUTPUT_FOLDER: "./output"
+  PROJECT_PATH: "demo"
+  OUTPUT_FOLDER: "output"
 
 jobs:
   build-firmware-m16a-tty-software-twi:
