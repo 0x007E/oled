@@ -29,6 +29,13 @@ void systick_timer_wait_us(unsigned int us)
 int main(void)
 {
     system_init();
+    
+    #ifdef SSD130X_USE_SOFT_TWI
+        twi_soft_init();
+    #else
+        twi_init();
+    #endif
+
     tty_init();
 
     PORTA.DIRCLR = 0x1C;

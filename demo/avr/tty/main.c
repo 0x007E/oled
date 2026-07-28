@@ -21,6 +21,12 @@ int main(void)
     DDRA = 0x00;
     PORTA = 0x07;
 
+    #ifdef SSD130X_USE_SOFT_TWI
+        twi_soft_init();
+    #else
+        twi_init();
+    #endif
+    
 	tty_init();
 	
 	char temp1 = 0;

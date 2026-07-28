@@ -18,6 +18,12 @@ void systick_timer_wait_us(unsigned int us)
 
 int main(void)
 {
+    #ifdef SSD130X_USE_SOFT_TWI
+        twi_soft_init();
+    #else
+        twi_init();
+    #endif
+
 	frame_init();
 
 	GFX_Point position = { 107, 2 };
